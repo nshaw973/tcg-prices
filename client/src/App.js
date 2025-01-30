@@ -11,7 +11,7 @@ import "./index.css";
 import bgImage from "./images/background/45-degree-fabric-dark.png"
 
 /* Pages */
-import { Homepage, Profile, Settings, Search } from "./pages";
+import { Homepage, Profile, Settings, Search, Categories } from "./pages";
 import { Navbar, Footer } from "./components/index";
 
 const httpLink = createHttpLink({
@@ -39,16 +39,21 @@ function App() {
       <div className="xapp flex flex-col min-h-svh overflow-hidden">
         <Router>
           <Navbar />
-          <div className="w-full flex flex-grow bg-neutral-400 justify-center shadow-2xl shadow-inner"
+          <div className="w-full flex flex-grow bg-neutral-400 justify-center shadow-2xl shadow-inner text-xs sm:text-sm"
           style={{
             backgroundImage: `url(${bgImage})`
           }}>
+            <div className="w-full xl:w-10/12 bg-white">
             <Routes>
               <Route path="/" element={<Homepage />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/search" element ={<Search />} />
+              <Route path="/categories/:category" element={<Categories />}/>
             </Routes>
+
+            </div>
+
           </div>
         </Router>
         <Footer />
