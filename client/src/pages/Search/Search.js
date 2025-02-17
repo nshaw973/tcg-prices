@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { searchQuery } from "../../components/Navbar/searchQuery/searchQuery";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { Loading } from "../../components";
 import SearchAll from "./Results/SearchAll";
 import CardById from "./Results/CardById";
@@ -12,7 +12,7 @@ const Search = () => {
 
   const [search, setSearch] = useState({
     type: searchParams.get("type"),
-    query: searchParams.get("query")
+    query: searchParams.get("query"),
   });
 
   // Update the search state whenever the searchParams change
@@ -23,7 +23,7 @@ const Search = () => {
     // If search parameters change, reset the data and start loading the new data
     setSearch({
       type: newType,
-      query: newQuery
+      query: newQuery,
     });
     setData(null); // Reset data when search query/type changes
     setLoading(true); // Set loading to true when starting to fetch new data
@@ -35,7 +35,10 @@ const Search = () => {
 
     const fetchData = async () => {
       try {
-        const result = await searchQuery(search.type, search.query.toLowerCase());
+        const result = await searchQuery(
+          search.type,
+          search.query.toLowerCase()
+        );
         setData(result); // Update data after fetching
       } catch (error) {
         console.log("Error fetching data:", error);
@@ -55,17 +58,15 @@ const Search = () => {
 
     switch (search.type) {
       case "name":
-        return data.map((item, index) => <SearchAll key={index} props={{ item, index }} />);
+        return data.map((item, index) => (
+          <SearchAll key={index} props={{ item, index }} />
+        ));
       case "id":
         return <CardById data={data} />;
       default:
         return <h1>Invalid search type!</h1>;
     }
   };
-    useEffect(() => {
-      console.log(data)
-    }, [data])
-
   return (
     <>
       {loading ? (

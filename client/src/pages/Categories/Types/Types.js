@@ -43,6 +43,7 @@ const Types = () => {
         const url = `http://localhost:3001/api/search/types`;
         const results = await getData(url);
         setData(results);
+        console.log(results)
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -68,11 +69,11 @@ const Types = () => {
             )
           ) : (
             <>
-            {data.map((pkmnType, index) => (
+{/*             {data.map((pkmnType, index) => (
               <div>
                 <h1>{pkmnType}</h1>
               </div>
-            ))}
+            ))} */}
 
             </>
           )}

@@ -17,7 +17,7 @@ const SearchAll = ({ props }) => {
     <>
       <li
         key={index}
-        className="w-full sm:w-[450px] h-48 border-2 shadow-xl mt-2 mb-2 md:m-4 flex flex-wrap animate-fade animate-once animate-ease-in"
+        className="w-full sm:w-[450px] h-fit border-2 shadow-xl mt-2 mb-2 md:m-4 flex flex-wrap animate-fade animate-once animate-ease-in bg-white"
       >
         <div className="w-full flex flex-row">
           {/* Image */}

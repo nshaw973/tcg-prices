@@ -47,14 +47,16 @@ router.get("/series", async (req, res) => {
 
 router.get("/types", async (req, res) => {
   try {
-    const result = await pokemon.type.all();
+    const result = await pokemon.card.all({
+      q: "types:Fairy",
+      orderBy: "-set.releaseDate",
+    });
     res.json(result);
   } catch (error) {
     console.error("Error fetching card by name:", error);
     res.status(500).send("Error fetching card by name");
   }
 });
-
 
 router.get("/series/:series", async (req, res) => {
   try {

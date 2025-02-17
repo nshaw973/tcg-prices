@@ -18,14 +18,27 @@ const Series = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
+      setSeriesData(null);
       navigate(`?set=${series}`);
       if (series) {
         try {
-          const url = `http://localhost:3001/api/search/series/${series}`;
-          const results = await getData(url);
+          const cachedData = localStorage.getItem(`${series}Data`);
+          let results;
+          if (cachedData) {
+            // Use cached data
+            results = JSON.parse(cachedData);
+          } else {
+            const url = `/api/search/series/${series}`;
+            results = await getData(url);
+            // Store in localStorage
+            localStorage.setItem(`${series}Data`, JSON.stringify(results));
+          }
           setSeriesData(results);
+          setLoading(false);
         } catch (error) {
           console.error("Error fetching series data:", error);
+          setLoading(false);
         }
       }
     };
@@ -35,14 +48,25 @@ const Series = () => {
 
   useEffect(() => {
     if (path === "/categories/series") {
+      setLoading(true);
       setSeriesData(null);
       navigate("/categories/series");
+      setLoading(false);
     }
     const fetchData = async () => {
       try {
         setLoading(true);
-        const url = `http://localhost:3001/api/search/series`;
-        const results = await getData(url);
+        const cachedData = localStorage.getItem("pkmnSeries");
+        let results;
+        if (cachedData) {
+          // Use cached data
+          results = JSON.parse(cachedData);
+        } else {
+          const url = `/api/search/series`;
+          results = await getData(url);
+          // Store in localStorage
+          localStorage.setItem("pkmnSeries", JSON.stringify(results));
+        }
         setData(results);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -57,7 +81,7 @@ const Series = () => {
   return (
     <>
       {/* Container for all series */}
-      <div className="flex flex-wrap gap-4 justify-center animate-fade animate-ease-in-out">
+      <div className="flex flex-wrap gap-4 justify-center animate-fade animate-ease-in-out pt-4">
         {loading ? (
           <Loading />
         ) : (
@@ -76,7 +100,7 @@ const Series = () => {
                 {data.map((series, index) => (
                   <div
                     key={index}
-                    className="flex flex-col border p-4 shadow-xl cursor-pointer"
+                    className="flex flex-col border p-4 shadow-xl cursor-pointer bg-white rounded"
                     onClick={() => selectSeries(series.id)}
                   >
                     {/* Image */}
@@ -85,7 +109,7 @@ const Series = () => {
                     >
                       <img
                         src={series.images.logo}
-                        className="max-h-24 max-w-56"
+                        className="max-h-24 max-w-56 m-auto"
                         alt={series.name}
                       />
                     </div>

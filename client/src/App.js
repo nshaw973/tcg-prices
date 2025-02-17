@@ -11,19 +11,20 @@ import "./index.css";
 import bgImage from "./images/background/45-degree-fabric-dark.png"
 
 /* Pages */
-import { Homepage, Profile, Settings, Search, Categories } from "./pages";
+import { Homepage, Profile, Settings, Search, Categories, Login, Collections } from "./pages";
 import { Navbar, Footer } from "./components/index";
 
 const httpLink = createHttpLink({
-  uri: "/graphql",
+  uri: '/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem("id_token");
+  // get the authentication token from local storage if it exists
+  const token = localStorage.getItem('id_token');
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : "",
+      authorization: token ? `Bearer ${token}` : '',
     },
   };
 });
@@ -39,14 +40,16 @@ function App() {
       <div className="xapp flex flex-col min-h-svh overflow-hidden">
         <Router>
           <Navbar />
-          <div className="w-full flex flex-grow bg-neutral-400 justify-center shadow-2xl shadow-inner text-xs sm:text-sm"
+          <div className="w-full flex flex-grow bg-neutral-600 justify-center shadow-2xl shadow-inner text-xs sm:text-sm"
           style={{
             backgroundImage: `url(${bgImage})`
           }}>
-            <div className="w-full xl:w-10/12 bg-white">
+            <div className="w-full xl:w-10/12 bg-neutral-900">
             <Routes>
               <Route path="/" element={<Homepage />} />
+              <Route path="/login" element={<Login />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path='/collection/:userId' element={<Collections />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/search" element ={<Search />} />
               <Route path="/categories/:category" element={<Categories />}/>

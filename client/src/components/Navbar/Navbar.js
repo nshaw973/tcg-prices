@@ -21,49 +21,12 @@ const Navbar = () => {
   return (
     <div className="w-full flex flex-col">
       {/* 1st Line */}
-      <div className="bg-white">
+      <div className="bg-white text-black flex flex-row justify-between">
         <Link to="/">
           <h1>Daily TCG Prices</h1>
         </Link>
-      </div>
-
-      {/* 2nd Line */}
-      <div
-        className="flex flex-row justify-between p-2 text-white"
-        style={{
-          backgroundColor: "#b51f1f",
-          backgroundImage: `url(${backgroundImage})`,
-        }}
-      >
-        <br />
-        <div className="justify-self-center">
-          <form onSubmit={handleSubmit} className="flex content-center">
-            {/* Search type selection */}
-            <select
-              tabIndex={0}
-              className="w-fit pl-2"
-              onChange={(e) => setQueryType(e.target.value)} // Update queryType on selection change
-              value={queryType}
-            >
-              <option value="name">Name</option>
-              <option value="id">Id</option>
-            </select>
-            {/* Search input field */}
-            <input
-              type="text"
-              name="query"
-              id="query"
-              placeholder="Search by..."
-              className="bg-white text-black border-2 border-black border-l-0"
-            />
-            {/* Search button */}
-            <button type="submit" className="btn btn-sm rounded-l-none">
-              Search
-            </button>
-          </form>
-        </div>
         <div>
-          <ul className="flex flex-row w-full justify-end">
+          <ul className="flex flex-row w-full">
             {tabs.map((tab, index) => (
               <li key={index}>
                 <Link to={tab.link}>
@@ -83,7 +46,53 @@ const Navbar = () => {
           </ul>
         </div>
       </div>
-
+      {/* 2nd Line */}
+      <div
+        className="flex flex-row justify-between p-2 text-white"
+        style={{
+          backgroundColor: "#b51f1f",
+          backgroundImage: `url(${backgroundImage})`,
+        }}
+      >
+        <br />
+        {/* Search Form */}
+        <div className="ml-auto mr-auto">
+          <form onSubmit={handleSubmit} className="flex content-center">
+            {/* Search type selection */}
+            <div className="join">
+              <div>
+                <div>
+                  <input
+                    className="input input-bordered join-item"
+                    type="text"
+                    name="query"
+                    id="query"
+                    placeholder="Search by..."
+                  />
+                </div>
+              </div>
+              <select
+                className="select select-bordered join-item"
+                tabIndex={0}
+                onChange={(e) => setQueryType(e.target.value)} // Update queryType on selection change
+                value={queryType}
+              >
+                <option disabled selected>
+                  Filter
+                </option>
+                <option value="name">Name</option>
+                <option value="id">Id</option>
+              </select>
+              <div className="indicator">
+                <button className="btn join-item" type="submit">
+                  Search
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        {/* Right Side Tabs */}
+      </div>
       {/* Tabs */}
       <div
         className="bg-neutral-800 w-full flex flex-row"
@@ -93,7 +102,11 @@ const Navbar = () => {
       >
         <div className="ml-auto mr-auto flex flex-row">
           {categories.map((category, index) => (
-            <Link to={`/categories/${category.name}`} key={index} className="p-2 w-18 underline text-white">
+            <Link
+              to={`/categories/${category.name}`}
+              key={index}
+              className="p-2 w-18 underline text-white"
+            >
               {category.alt}
             </Link>
           ))}

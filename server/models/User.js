@@ -1,48 +1,39 @@
-const { Schema, model } = require('mongoose');
+const mongoose = require("mongoose");
+const { Schema, model } = mongoose; // Destructure Schema and model from mongoose
 const bcrypt = require('bcrypt');
 
-const userSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    maxLength: 16,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    maxLength: 100,
-    match: [/.+@.+\..+/, "Must provide a valid email address."],
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: 5,
-    maxLength: 18,
-  },
-  firstName: {
-    type: String,
-    required: true,
-    maxLength: 30,
-  },
-  lastName: {
-    type: String,
-    required: true,
-    maxLength: 30,
-  },
-  profileImage: {
-    type: String,
-  },
-/*   favorites: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'cards'
+const userSchema = new Schema(
+  {
+    userId: {
+      type: String,
+      required: true,
+      unique: true,
     },
-  ], */
-});
-
+    username: {
+      type: String,
+      required: true,
+    },
+    balance: {
+      type: Schema.Types.Decimal128,
+      default: 0.0,
+    },
+    lastDailyCollected: {
+      type: Date,
+    },
+    cardCollection: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Card',  // Referencing the Card collection for favorited cards
+      },
+    ],
+    password: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+  },
+  { timestamps: true }
+);
 userSchema.pre('save', async function (next) {
   if (this.isNew || this.isModified('password')) {
     const saltRounds = 10;
@@ -56,7 +47,6 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-const User = model('User', userSchema);
-
+const User = model("User", userSchema);
 
 module.exports = User;

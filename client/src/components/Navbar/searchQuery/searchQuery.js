@@ -1,7 +1,7 @@
 /* For API use /search/searchTCG/ */
 const getCardByName = async (type, query) => {
   try {
-    const response = await fetch(`http://localhost:3001/api/search/${type}/${query}`); // Corrected API endpoint
+    const response = await fetch(`/api/search/${type}/${query}`); // Corrected API endpoint
     if (!response.ok) {
       throw new Error('Card not found');
     }
@@ -28,6 +28,7 @@ export const searchQuery = async (type, query) => {
         if (cardData) {
           return(cardData)
         }
+        break;
       default:
         return null;  // Return null if no valid query
     }

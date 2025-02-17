@@ -1,4 +1,5 @@
 export const tabs = [
+    { name: "Login", link: "/login" },
     { name: "Profile", link: "/profile" },
     { name: "Settings", link: "/settings" },
   ];
