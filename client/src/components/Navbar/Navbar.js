@@ -23,7 +23,20 @@ const Navbar = () => {
       {/* 1st Line */}
       <div className="bg-white text-black flex flex-row justify-between">
         <Link to="/">
-          <h1>Daily TCG Prices</h1>
+        <div className="flex flex-row">
+        <a
+        className="w-6 m-auto"
+            title="Andreuvv, Public domain, via Wikimedia Commons"
+            href="https://commons.wikimedia.org/wiki/File:Pok%C3%A9_Ball_icon.svg"
+          >
+            <img
+              alt="Poké Ball icon"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/512px-Pok%C3%A9_Ball_icon.svg.png?20161023215848"
+            />
+          </a>
+          <h1>DiscordTCG Bot Collection Site</h1>
+        </div>
+
         </Link>
         <div>
           <ul className="flex flex-row w-full">

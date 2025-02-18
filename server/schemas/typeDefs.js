@@ -9,6 +9,7 @@ type Card {
   name: String
   set: Set
   images: Images
+  price: Decimal128
   tcgPlayer: String
 }
 
@@ -27,8 +28,11 @@ type User {
   userId: String!
   username: String!
   balance: Decimal128
+  avatar: String
   lastDailyCollected: Date
   cardCollection: [Card]
+  collectionWorth: Decimal128
+  cardCount: Int
 }
 
 

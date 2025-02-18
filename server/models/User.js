@@ -13,6 +13,9 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    avatar: {
+      type: String
+    },
     balance: {
       type: Schema.Types.Decimal128,
       default: 0.0,
@@ -26,14 +29,27 @@ const userSchema = new Schema(
         ref: 'Card',  // Referencing the Card collection for favorited cards
       },
     ],
+    collectionWorth: {
+      type: Schema.Types.Decimal128,
+      default: 0.0,
+    },
     password: {
       type: String,
       required: true,
       unique: true,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
 );
+
+userSchema.virtual('cardCount').get(function() {
+  return this.cardCollection.length;
+});
+
 userSchema.pre('save', async function (next) {
   if (this.isNew || this.isModified('password')) {
     const saltRounds = 10;

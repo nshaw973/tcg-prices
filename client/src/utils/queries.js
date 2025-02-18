@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 // Query for current user
 export const QUERY_ME = gql`
@@ -31,9 +31,15 @@ export const QUERY_USER = gql`
     user(userId: $userId) {
       username
       userId
+      avatar
+      balance
+      lastDailyCollected
+      cardCount
+      collectionWorth
       cardCollection {
         cardId
         name
+        price
         set {
           id
           name
@@ -45,6 +51,20 @@ export const QUERY_USER = gql`
         }
         tcgPlayer
       }
+    }
+  }
+`;
+
+export const QUERY_USERS = gql`
+  query Users {
+    users {
+      userId
+      username
+      avatar
+      balance
+      lastDailyCollected
+      collectionWorth
+      cardCount
     }
   }
 `;

@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { upperCase } from "../../utils/utils";
 import { getData } from "../utils/utils";
+import { removeOldestItem } from "../../../utils/utils";
 import SearchAll from "../../Search/Results/SearchAll";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import { Loading } from "../../../components";
 
 const Series = () => {
@@ -17,14 +23,14 @@ const Series = () => {
   const path = location.pathname;
 
   useEffect(() => {
+    setLoading(true);
     const fetchData = async () => {
-      setLoading(true);
       setSeriesData(null);
-      navigate(`?set=${series}`);
       if (series) {
+        let results;
         try {
-          const cachedData = localStorage.getItem(`${series}Data`);
-          let results;
+          const cachedData = sessionStorage.getItem(`${series}Data`);
+
           if (cachedData) {
             // Use cached data
             results = JSON.parse(cachedData);
@@ -32,13 +38,23 @@ const Series = () => {
             const url = `/api/search/series/${series}`;
             results = await getData(url);
             // Store in localStorage
-            localStorage.setItem(`${series}Data`, JSON.stringify(results));
+            sessionStorage.setItem(`${series}Data`, JSON.stringify(results));
           }
           setSeriesData(results);
           setLoading(false);
         } catch (error) {
-          console.error("Error fetching series data:", error);
-          setLoading(false);
+          if (error.name === "QuotaExceededError") {
+            // If storage is full, remove the oldest item
+            removeOldestItem();
+            // Retry adding the item
+            const url = `/api/search/series/${series}`;
+            results = await getData(url);
+            sessionStorage.setItem(`${series}Data`, JSON.stringify(results));
+          } else {
+            console.error("Error fetching series data:", error);
+            setLoading(false);
+            return;
+          }
         }
       }
     };
@@ -98,10 +114,11 @@ const Series = () => {
             ) : (
               <>
                 {data.map((series, index) => (
-                  <div
+                  <Link
                     key={index}
                     className="flex flex-col border p-4 shadow-xl cursor-pointer bg-white rounded"
                     onClick={() => selectSeries(series.id)}
+                    to={`/categories/series?set=${series.id}`}
                   >
                     {/* Image */}
                     <div
@@ -120,7 +137,7 @@ const Series = () => {
                       <h1 className="text-sm">{series.releaseDate}</h1>
                       <h1>{series.series}</h1>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </>
             )}

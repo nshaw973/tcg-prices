@@ -17,7 +17,7 @@ const SearchAll = ({ props }) => {
     <>
       <li
         key={index}
-        className="w-full sm:w-[450px] h-fit border-2 shadow-xl mt-2 mb-2 md:m-4 flex flex-wrap animate-fade animate-once animate-ease-in bg-white"
+        className="w-full sm:w-[450px] h-fit shadow-xl mt-2 mb-2 md:m-4 flex flex-wrap animate-fade animate-once animate-ease-in  rounded-xl"
       >
         <div className="w-full flex flex-row">
           {/* Image */}
@@ -28,7 +28,7 @@ const SearchAll = ({ props }) => {
             onClick={() => document.getElementById(`card_${index}`).showModal()}
             className={`${
               cardFlip && "animate-rotate-y animate-once animate-ease-in-out"
-            } h-48 md:min-h-48 ml-auto mr-auto`}
+            } h-48 md:min-h-48 ml-auto mr-auto shadow-xl`}
           ></img>
           <dialog id={`card_${index}`} className="modal">
             <div className="modal-box bg-transparent">
@@ -43,7 +43,7 @@ const SearchAll = ({ props }) => {
             </form>
           </dialog>
           {/* Market Data */}
-          <div className="w-full flex flex-col">
+          <div className="w-full flex flex-col bg-white rounded-xl ml-1">
             <div className="w-full flex flex-row border-b-2 pb-1 border-neutral-300">
               <div className="flex flex-col w-full text-black m-auto pl-1">
                 <strong className="pr-6">
@@ -52,12 +52,12 @@ const SearchAll = ({ props }) => {
                 <h1 className="text-xs">{item.set.name}</h1>
               </div>
               {/* Add */}
-              <button
+              {/* <button
                 className="btn btn-sm rounded-none text-white ml-2 hover:invert"
                 onClick={() => setCardFlip(true)}
               >
                 +
-              </button>
+              </button> */}
             </div>
             {/* Data */}
             <div className="text-black pl-1 p-1 w-full h-full">

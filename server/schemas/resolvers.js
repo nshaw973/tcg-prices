@@ -7,7 +7,7 @@ const resolvers = {
   Query: {
     users: async () => {
       // Populate cardCollection directly from User model
-      return User.find().populate("cardCollection"); 
+      return User.find(); 
     },
     user: async (parent, { userId }) => {
       const user = await User.findOne({ userId }).populate("cardCollection"); // Populating cardCollection directly from User

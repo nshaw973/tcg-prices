@@ -8,23 +8,33 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./index.css";
-import bgImage from "./images/background/45-degree-fabric-dark.png"
+import bgImage from "./images/background/45-degree-fabric-dark.png";
+import bgImage2 from "./images/background/black-linen.png";
 
 /* Pages */
-import { Homepage, Profile, Settings, Search, Categories, Login, Collections } from "./pages";
+import {
+  Homepage,
+  Profile,
+  Settings,
+  Search,
+  Categories,
+  Login,
+  Collections,
+  AllCollections,
+} from "./pages";
 import { Navbar, Footer } from "./components/index";
 
 const httpLink = createHttpLink({
-  uri: '/graphql',
+  uri: "/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
-  const token = localStorage.getItem('id_token');
+  const token = localStorage.getItem("id_token");
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : '',
+      authorization: token ? `Bearer ${token}` : "",
     },
   };
 });
@@ -40,23 +50,32 @@ function App() {
       <div className="xapp flex flex-col min-h-svh overflow-hidden">
         <Router>
           <Navbar />
-          <div className="w-full flex flex-grow bg-neutral-600 justify-center shadow-2xl shadow-inner text-xs sm:text-sm"
-          style={{
-            backgroundImage: `url(${bgImage})`
-          }}>
-            <div className="w-full xl:w-10/12 bg-neutral-900">
-            <Routes>
-              <Route path="/" element={<Homepage />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path='/collection/:userId' element={<Collections />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="/search" element ={<Search />} />
-              <Route path="/categories/:category" element={<Categories />}/>
-            </Routes>
-
+          <div
+            className="w-full flex flex-grow bg-neutral-600 justify-center shadow-2xl shadow-inner text-xs sm:text-sm"
+            style={{
+              backgroundImage: `url(${bgImage})`,
+            }}
+          >
+            <div
+              className="w-full xl:w-10/12 bg-neutral-800"
+              style={{
+                backgroundImage: `url(${bgImage2})`,
+              }}
+            >
+              <Routes>
+                <Route path="/" element={<Homepage />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route
+                  path="/categories/collections"
+                  element={<AllCollections />}
+                />
+                <Route path="/collection/:userId" element={<Collections />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="/search" element={<Search />} />
+                <Route path="/categories/:category" element={<Categories />} />
+              </Routes>
             </div>
-
           </div>
         </Router>
         <Footer />
