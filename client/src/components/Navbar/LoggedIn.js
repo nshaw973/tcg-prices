@@ -13,7 +13,6 @@ const LoggedIn = () => {
   };
   return (
     <div className="flex flex-row w-full">
-      <h1 className="m-auto">Hello {user.username}!</h1>
       <div className="dropdown dropdown-end shadow">
         <img
           src={user.avatar}
@@ -23,15 +22,16 @@ const LoggedIn = () => {
         />
         <ul
           tabIndex={0}
-          className="dropdown-content menu bg-base-100 text-white rounded-box z-[1] w-52 p-2 shadow"
+          className="dropdown-content menu bg-white text-black rounded-box z-[1] w-52 p-2 shadow border-2"
         >
-          <li>
+          <li className="text-black border-b-2 w-full">Hello {user.username}!</li>
+          <li className="hover:bg-red-500 hover:text-white rounded-xl">
             <Link to={`/collection/${user.userId}`}>View Collection</Link>
           </li>
-          <li>
+          <li className="hover:bg-red-500 hover:text-white rounded-xl">
             <Link to={`/user/${user.useeId}/settings`}>Settings</Link>
           </li>
-          <li>
+          <li className="hover:bg-red-500 hover:text-white rounded-xl">
             <h1 onClick={logout}>Logout</h1>
           </li>
         </ul>

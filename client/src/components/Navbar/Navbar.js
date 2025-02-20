@@ -30,7 +30,7 @@ const Navbar = () => {
               alt="Poké Ball icon"
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/512px-Pok%C3%A9_Ball_icon.svg.png?20161023215848"
             />
-            <h1>DiscordTCG Bot Collection Site</h1>
+            <h1 className="text-xs lg:text-md mt-1">DiscordTCG Bot Collection</h1>
           </div>
         </Link>
         <div>
@@ -65,14 +65,14 @@ const Navbar = () => {
       >
         <br />
         {/* Search Form */}
-        <div className="ml-auto mr-auto">
+        <div className="ml-auto mr-auto ">
           <form onSubmit={handleSubmit} className="flex content-center">
             {/* Search type selection */}
             <div className="join">
               <div>
                 <div>
                   <input
-                    className="input input-bordered join-item"
+                    className="input input-bordered join-item input-sm"
                     type="text"
                     name="query"
                     id="query"
@@ -81,7 +81,7 @@ const Navbar = () => {
                 </div>
               </div>
               <select
-                className="select select-bordered join-item"
+                className="select select-bordered join-item select-sm"
                 tabIndex={0}
                 onChange={(e) => setQueryType(e.target.value)} // Update queryType on selection change
                 value={queryType}
@@ -93,7 +93,7 @@ const Navbar = () => {
                 <option value="id">Id</option>
               </select>
               <div className="indicator">
-                <button className="btn join-item" type="submit">
+                <button className="btn btn-sm join-item" type="submit">
                   Search
                 </button>
               </div>

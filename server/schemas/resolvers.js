@@ -53,7 +53,18 @@ const resolvers = {
 
       return { token, user };
     },
-
+    createUser: async (parent, {userId, username, password, balance, avatar, lastDailyCollected, collectionWorth}) => {
+      const user = await User.create({
+        userId,
+        username,
+        password,
+        balance,
+        avatar,
+        lastDailyCollected,
+        collectionWorth,
+      })
+      return user
+    },
     updateBalance: async (parent, { userId, balance }) => {
       if (balance < 0) {
         throw new Error("Balance cannot be negative");

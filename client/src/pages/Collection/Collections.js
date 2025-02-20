@@ -1,11 +1,13 @@
+import React from "react";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { QUERY_USER } from "../../utils/queries";
-import bgImage from "../../images/background/45-degree-fabric-dark.png";
+import { bgFabric, iconBurger } from "../../images/index";
+import Auth from "../../utils/auth";
 
 const Collections = () => {
   const { userId } = useParams();
-
+  const me = Auth.getProfile().data;
   const { loading, error, data } = useQuery(QUERY_USER, {
     variables: { userId },
   });
@@ -42,7 +44,7 @@ const Collections = () => {
                   className="shadow-xl text-white p-1 ml-2 rounded-xl w-full"
                   style={{
                     backgroundColor: "#b51f1f",
-                    backgroundImage: `url(${bgImage})`,
+                    backgroundImage: `url(${bgFabric})`,
                   }}
                 >
                   {username}'s Collection
@@ -69,12 +71,12 @@ const Collections = () => {
             </div>
           </div>
           {/* Card Collection */}
-          <ul className="flex flex-wrap justify-center">
+          <ul className="flex flex-wrap justify-center w-full">
             {Array.isArray(cardCollection) &&
               cardCollection.map((pkmn, index) => (
                 <li
                   key={index}
-                  className="m-2 shadow-xl flex flex-wrap animate-fade animate-once animate-ease-in rounded w-48"
+                  className="m-2 shadow-xl flex flex-wrap animate-fade animate-once animate-ease-in rounded w-1/4 sm:w-1/5 md:w-1/6"
                 >
                   <div className="w-full flex flex-col">
                     <img
@@ -85,13 +87,18 @@ const Collections = () => {
                       }
                     />
                     <dialog id={`card_${index}`} className="modal">
-                      <div className="modal-box bg-transparent">
-                        <img
-                          alt={pkmn.name || "Pokémon"}
-                          src={pkmn.images.large}
-                          className="w-fit h-fit animate-fade-up animate-ease-out"
-                        />
-                      </div>
+                      <div
+                        className="modal-box bg-transparent h-5/6 w-3/6"
+                        style={{
+                          backgroundImage: `url(${pkmn.images.large})`,
+                          backgroundSize: `contain`,
+                          backgroundRepeat: `no-repeat`,
+                          backgroundPosition: `center`
+                        }}
+                        onClick={() =>
+                          document.getElementById(`card_${index}`).close()
+                        }
+                      ></div>
                       <form method="dialog" className="modal-backdrop">
                         <button>close</button>
                       </form>
@@ -100,12 +107,15 @@ const Collections = () => {
                       className="text-black w-full flex flex-row justify-between p-1 mt-2 rounded-xl"
                       style={{
                         backgroundColor: "#b51f1f",
-                        backgroundImage: `url(${bgImage})`,
+                        backgroundImage: `url(${bgFabric})`,
                       }}
                     >
                       <h1 className="text-white ml-auto mr-auto">
                         ${pkmn.price.$numberDecimal}
                       </h1>
+                      {me.userId === userId && (
+                        <img src={iconBurger} className="size-4 justify-end" />
+                      )}
                     </div>
                     <div className="w-full flex flex-col bg-white rounded-xl mt-2">
                       <div className="w-full flex flex-row pb-1">
