@@ -60,7 +60,7 @@ const typeDefs = gql`
       collectionWorth: Decimal128
     ): User
     updateBalance(userId: String!, balance: Float!): User
-    removeCardAndUpdateBalance(userId: ID!, cardId: ID!, price: Float!): User
+    removeCardAndUpdateBalance(userId: String!, cardId: ID!, price: Float!): User
   }
 
   type Auth {

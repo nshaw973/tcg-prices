@@ -24,7 +24,7 @@ const LoggedIn = () => {
           tabIndex={0}
           className="dropdown-content menu bg-white text-black rounded-box z-[1] w-52 p-2 shadow border-2"
         >
-          <li className="text-black border-b-2 w-full">Hello {user.username}!</li>
+          <li className="text-black border-b-2 w-full p-2">Hello {user.username}!</li>
           <li className="hover:bg-red-500 hover:text-white rounded-xl">
             <Link to={`/collection/${user.userId}`}>View Collection</Link>
           </li>
