@@ -31,7 +31,7 @@ const Collections = () => {
         <>
           {/* User Information */}
           <div>
-            <div className="text-black text-sm flex flex-row rounded w-fit p-4 mt-8 m-auto w-full">
+            <div className="text-black text-sm flex flex-row rounded w-fit p-4 m-auto w-full">
               <img
                 src={avatar}
                 className="w-28 h-fit rounded-xl"

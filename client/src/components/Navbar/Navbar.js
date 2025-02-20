@@ -6,7 +6,6 @@ import Auth from "../../utils/auth";
 import LoggedIn from "./LoggedIn";
 
 const Navbar = () => {
-  const [activeTab, setActiveTab] = useState("Homepage");
   const [queryType, setQueryType] = useState("name");
   const navigate = useNavigate(); // Correct use of useNavigate hook
 
@@ -35,30 +34,22 @@ const Navbar = () => {
           </div>
         </Link>
         <div>
-          
           <ul className="flex flex-row w-full">
             {Auth.loggedIn() ? (
               <>
-              <LoggedIn />
+                <LoggedIn />
               </>
             ) : (
               <>
-                {tabs.map((tab, index) => (
-                  <li key={index}>
-                    <Link to={tab.link}>
-                      <h1
-                        className={`p-2 ml-2 mr-2 border-b-2 hover:border-neutral-600 flex-1 shadow-md text-xs ${
-                          activeTab === tab.name
-                            ? `border-black`
-                            : `border-neutral-400`
-                        }`}
-                        onClick={() => setActiveTab(tab.name)}
-                      >
-                        {tab.name}
-                      </h1>
-                    </Link>
-                  </li>
-                ))}
+                <li className="w-full">
+                  <Link to={"/login"}>
+                    <h1
+                      className={` text-lg h-full w-full m-3 rounded-xl`}
+                    >
+                      Login
+                    </h1>
+                  </Link>
+                </li>
               </>
             )}
           </ul>
