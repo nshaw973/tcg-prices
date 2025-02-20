@@ -7,20 +7,10 @@ export const QUERY_ME = gql`
       _id
       userId
       username
-      cardCollection {
-        cardId
-        name
-        set {
-          id
-          name
-          series
-        }
-        images {
-          small
-          large
-        }
-        tcgPlayer
-      }
+      avatar
+      balance
+      lastDailyCollected
+      collectionWorth
     }
   }
 `;

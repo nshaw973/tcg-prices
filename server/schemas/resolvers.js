@@ -28,16 +28,7 @@ const resolvers = {
     },
     me: async (parent, args, context) => {
       if (context.user) {
-        const user = await User.findOne({ _id: context.user._id }).populate(
-          "cardCollection"
-        ); // Populating cardCollection directly from User model
-        if (user && user.balance) {
-          // Ensure balance is a native JavaScript number, convert Decimal128
-          user.balance =
-            user.balance instanceof mongoose.Types.Decimal128
-              ? parseFloat(user.balance.toString()) // Convert Decimal128 to Float
-              : user.balance;
-        }
+        const user = await User.findOne({ _id: context.user._id })
         return user;
       }
       throw new AuthenticationError("Not logged in");
@@ -45,20 +36,21 @@ const resolvers = {
   },
 
   Mutation: {
-    login: async (parent, { username, password }) => {
-      const user = await User.findOne({ username });
+    login: async (parent, { userId, password }) => {
+      const user = await User.findOne({ userId });
 
       if (!user) {
-        throw new Error("No user found with this username");
+        throw new AuthenticationError('No user found with this User Id!!');
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw new Error("Incorrect password");
+        throw new AuthenticationError('Incorrect credentials');
       }
 
       const token = signToken(user);
+
       return { token, user };
     },
 

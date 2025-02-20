@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { QUERY_USER } from "../../utils/queries";
-import bgImage from "../../images/background/45-degree-fabric-dark.png"
+import bgImage from "../../images/background/45-degree-fabric-dark.png";
 
 const Collections = () => {
   const { userId } = useParams();
@@ -31,14 +31,20 @@ const Collections = () => {
         <>
           {/* User Information */}
           <div>
-            <div className="text-black text-sm flex flex-row rounded w-fit p-4 mt-8 m-auto w-full lg:w-8/12">
+            <div className="text-black text-sm flex flex-row rounded w-fit p-4 mt-8 m-auto w-full">
               <img
                 src={avatar}
-                className="w-24 w-full rounded-xl"
+                className="w-28 h-fit rounded-xl"
                 alt={`${username}-icon`}
               />
               <div className="flex flex-col w-full">
-                <h1 className="shadow-xl text-white p-1 ml-2 rounded-xl w-full">
+                <h1
+                  className="shadow-xl text-white p-1 ml-2 rounded-xl w-full"
+                  style={{
+                    backgroundColor: "#b51f1f",
+                    backgroundImage: `url(${bgImage})`,
+                  }}
+                >
                   {username}'s Collection
                 </h1>
                 <ul className="flex flex-col bg-white rounded-xl ml-2 h-full mt-2 p-1 m-auto w-full">
@@ -90,12 +96,14 @@ const Collections = () => {
                         <button>close</button>
                       </form>
                     </dialog>
-                    <div className="text-black w-full flex flex-row justify-between p-1 mt-2 rounded-xl"
-                            style={{
-                              backgroundColor: "#b51f1f",
-                              backgroundImage: `url(${bgImage})`,
-                            }}>
-                      <h1 className="text-white ml-auto mr-auto" >
+                    <div
+                      className="text-black w-full flex flex-row justify-between p-1 mt-2 rounded-xl"
+                      style={{
+                        backgroundColor: "#b51f1f",
+                        backgroundImage: `url(${bgImage})`,
+                      }}
+                    >
+                      <h1 className="text-white ml-auto mr-auto">
                         ${pkmn.price.$numberDecimal}
                       </h1>
                     </div>
@@ -107,7 +115,9 @@ const Collections = () => {
                           rel="noreferrer"
                           className="flex flex-col w-full text-black m-auto pl-1 h-16"
                         >
-                          <strong className="pr-6 ml-auto mr-auto">{pkmn.name}</strong>
+                          <strong className="pr-6 ml-auto mr-auto">
+                            {pkmn.name}
+                          </strong>
                           <h1 className="text-xs  mt-auto">{pkmn.set.name}</h1>
                         </a>
                       </div>

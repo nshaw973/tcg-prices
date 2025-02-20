@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import backgroundImage from "../../images/background/45-degree-fabric-dark.png";
 import { tabs, categories } from "./lists";
+import Auth from "../../utils/auth";
+import LoggedIn from "./LoggedIn";
 
 const Navbar = () => {
   const [activeTab, setActiveTab] = useState("Homepage");
@@ -21,41 +23,44 @@ const Navbar = () => {
   return (
     <div className="w-full flex flex-col">
       {/* 1st Line */}
-      <div className="bg-white text-black flex flex-row justify-between">
+      <div className="bg-white text-black flex flex-row justify-between h-14">
         <Link to="/">
-        <div className="flex flex-row">
-        <a
-        className="w-6 m-auto"
-            title="Andreuvv, Public domain, via Wikimedia Commons"
-            href="https://commons.wikimedia.org/wiki/File:Pok%C3%A9_Ball_icon.svg"
-          >
+          <div className="flex flex-row mt-4 ml-2">
             <img
+              className="w-6 h-6"
               alt="Poké Ball icon"
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/512px-Pok%C3%A9_Ball_icon.svg.png?20161023215848"
             />
-          </a>
-          <h1>DiscordTCG Bot Collection Site</h1>
-        </div>
-
+            <h1>DiscordTCG Bot Collection Site</h1>
+          </div>
         </Link>
         <div>
+          
           <ul className="flex flex-row w-full">
-            {tabs.map((tab, index) => (
-              <li key={index}>
-                <Link to={tab.link}>
-                  <h1
-                    className={`p-2 ml-2 mr-2 border-b-2 hover:border-neutral-600 flex-1 shadow-md text-xs ${
-                      activeTab === tab.name
-                        ? `border-black`
-                        : `border-neutral-400`
-                    }`}
-                    onClick={() => setActiveTab(tab.name)}
-                  >
-                    {tab.name}
-                  </h1>
-                </Link>
-              </li>
-            ))}
+            {Auth.loggedIn() ? (
+              <>
+              <LoggedIn />
+              </>
+            ) : (
+              <>
+                {tabs.map((tab, index) => (
+                  <li key={index}>
+                    <Link to={tab.link}>
+                      <h1
+                        className={`p-2 ml-2 mr-2 border-b-2 hover:border-neutral-600 flex-1 shadow-md text-xs ${
+                          activeTab === tab.name
+                            ? `border-black`
+                            : `border-neutral-400`
+                        }`}
+                        onClick={() => setActiveTab(tab.name)}
+                      >
+                        {tab.name}
+                      </h1>
+                    </Link>
+                  </li>
+                ))}
+              </>
+            )}
           </ul>
         </div>
       </div>
