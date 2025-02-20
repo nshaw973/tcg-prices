@@ -7,7 +7,7 @@ const resolvers = {
   Query: {
     users: async () => {
       // Populate cardCollection directly from User model
-      return User.find(); 
+      return User.find();
     },
     user: async (parent, { userId }) => {
       const user = await User.findOne({ userId }).populate("cardCollection"); // Populating cardCollection directly from User
@@ -28,7 +28,7 @@ const resolvers = {
     },
     me: async (parent, args, context) => {
       if (context.user) {
-        const user = await User.findOne({ _id: context.user._id })
+        const user = await User.findOne({ _id: context.user._id });
         return user;
       }
       throw new AuthenticationError("Not logged in");
@@ -40,20 +40,31 @@ const resolvers = {
       const user = await User.findOne({ userId });
 
       if (!user) {
-        throw new AuthenticationError('No user found with this User Id!!');
+        throw new AuthenticationError("No user found with this User Id!!");
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw new AuthenticationError('Incorrect credentials');
+        throw new AuthenticationError("Incorrect credentials");
       }
 
       const token = signToken(user);
 
       return { token, user };
     },
-    createUser: async (parent, {userId, username, password, balance, avatar, lastDailyCollected, collectionWorth}) => {
+    createUser: async (
+      parent,
+      {
+        userId,
+        username,
+        password,
+        balance,
+        avatar,
+        lastDailyCollected,
+        collectionWorth,
+      }
+    ) => {
       const user = await User.create({
         userId,
         username,
@@ -62,56 +73,43 @@ const resolvers = {
         avatar,
         lastDailyCollected,
         collectionWorth,
-      })
-      return user
+      });
+      return user;
     },
-    updateBalance: async (parent, { userId, balance }) => {
-      if (balance < 0) {
-        throw new Error("Balance cannot be negative");
+    removeCardAndUpdateBalance: async (parent, { userId, cardId, price }) => {
+      // Validate price
+      if (isNaN(parseFloat(price))) {
+        throw new Error("Invalid price value");
       }
 
+      // Update the user document in one go
       const updatedUser = await User.findOneAndUpdate(
-        { userId },
-        { $set: { balance } },
-        { new: true }
+        { userId }, // Find the user by userId
+        {
+          $pull: { cardCollection: cardId}, // Remove the card's ObjectId
+          $inc: {
+            collectionWorth: -parseFloat(price), // Decrease collectionWorth
+            balance: parseFloat(price), // Increase balance
+          },
+        },
+        { new: true } // Return the updated document
       );
 
-      // Ensure balance is a valid float
+      if (!updatedUser) {
+        throw new Error("User not found");
+      }
+
+      // Ensure balance and collectionWorth are valid floats (if using Decimal128)
+      if (updatedUser.collectionWorth instanceof mongoose.Types.Decimal128) {
+        updatedUser.collectionWorth = parseFloat(
+          updatedUser.collectionWorth.toString()
+        );
+      }
       if (updatedUser.balance instanceof mongoose.Types.Decimal128) {
         updatedUser.balance = parseFloat(updatedUser.balance.toString());
       }
 
       return updatedUser;
-    },
-
-    addCardToCollection: async (parent, { userId, cardId }) => {
-      const user = await User.findOne({ userId });
-
-      if (!user) {
-        throw new Error("User not found");
-      }
-
-      // Add the card to the collection (cardCollection is now part of User model)
-      if (!user.cardCollection.includes(cardId)) {
-        user.cardCollection.push(cardId);
-        await user.save();
-      }
-
-      return user;
-    },
-
-    removeCardFromCollection: async (parent, { userId, cardId }) => {
-      const user = await User.findOne({ userId });
-
-      if (!user) {
-        throw new Error("User not found");
-      }
-
-      // Remove the card from the collection (cardCollection is now part of User model)
-      user.cardCollection = user.cardCollection.filter(id => id !== cardId);
-      await user.save();
-
-      return user;
     },
   },
 };

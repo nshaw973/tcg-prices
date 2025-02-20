@@ -27,6 +27,7 @@ export const QUERY_USER = gql`
       cardCount
       collectionWorth
       cardCollection {
+        _id
         cardId
         name
         price

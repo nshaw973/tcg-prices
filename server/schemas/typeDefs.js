@@ -50,10 +50,17 @@ const typeDefs = gql`
 
   type Mutation {
     login(userId: String!, password: String!): Auth!
-    createUser(userId: String!, username: String!, password: String!, balance: Decimal128, avatar: String, lastDailyCollected: Date, collectionWorth: Decimal128): User
+    createUser(
+      userId: String!
+      username: String!
+      password: String!
+      balance: Decimal128
+      avatar: String
+      lastDailyCollected: Date
+      collectionWorth: Decimal128
+    ): User
     updateBalance(userId: String!, balance: Float!): User
-    addCardToCollection(userId: String!, cardIds: [ID!]!): User # Add cards to a user's collection
-    removeCardFromCollection(userId: String!, cardId: ID!): User # Remove a card from a user's collection
+    removeCardAndUpdateBalance(userId: ID!, cardId: ID!, price: Float!): User
   }
 
   type Auth {

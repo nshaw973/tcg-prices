@@ -93,7 +93,7 @@ const Collections = () => {
                           backgroundImage: `url(${pkmn.images.large})`,
                           backgroundSize: `contain`,
                           backgroundRepeat: `no-repeat`,
-                          backgroundPosition: `center`
+                          backgroundPosition: `center`,
                         }}
                         onClick={() =>
                           document.getElementById(`card_${index}`).close()
@@ -113,23 +113,45 @@ const Collections = () => {
                       <h1 className="text-white ml-auto mr-auto">
                         ${pkmn.price.$numberDecimal}
                       </h1>
-                      {me.userId === userId && (
-                        <img src={iconBurger} className="size-4 justify-end" />
-                      )}
+
+                      <div className="dropdown dropdown-bottom dropdown-end">
+                        <img
+                          src={iconBurger}
+                          className="size-4 justify-end hover:invert"
+                          tabIndex={0}
+                          role="button"
+                        />
+                        <ul
+                          tabIndex={0}
+                          className="dropdown-content menu-sm bg-base-100 rounded-box z-[1] w-24 p-2 shadow text-sm"
+                        >
+                          {me.userId === userId && (
+                            <li>
+                              <h1>Sell</h1>
+                            </li>
+                          )}
+                          <li>
+                            <a
+                              href={pkmn.tcgPlayer}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              TCGplayer
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                     <div className="w-full flex flex-col bg-white rounded-xl mt-2">
                       <div className="w-full flex flex-row pb-1">
-                        <a
-                          href={pkmn.tcgPlayer}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="flex flex-col w-full text-black m-auto pl-1 h-16"
-                        >
+                        <div className="flex flex-col w-full text-black m-auto pl-1 h-16">
                           <strong className="pr-6 ml-auto mr-auto">
                             {pkmn.name}
                           </strong>
-                          <h1 className="text-xs  mt-auto">{pkmn.set.name}</h1>
-                        </a>
+                          <h1 className="text-xs  mt-auto">
+                            {pkmn.set.name} {pkmn.cardId}
+                          </h1>
+                        </div>
                       </div>
                     </div>
                   </div>
