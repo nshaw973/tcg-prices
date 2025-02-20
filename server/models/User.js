@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose; // Destructure Schema and model from mongoose
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 const userSchema = new Schema(
   {
@@ -14,7 +14,7 @@ const userSchema = new Schema(
       required: true,
     },
     avatar: {
-      type: String
+      type: String,
     },
     balance: {
       type: Schema.Types.Decimal128,
@@ -26,9 +26,19 @@ const userSchema = new Schema(
     cardCollection: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Card',  // Referencing the Card collection for favorited cards
+        ref: "Card", // Referencing the Card collection for favorited cards
       },
     ],
+    favorites: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Card", // Referencing the Card collection for favorited cards
+      },
+    ],
+    coverCard: {
+      type: Schema.Types.ObjectId,
+      ref: "Card"
+    },
     collectionWorth: {
       type: Schema.Types.Decimal128,
       default: 0.0,
@@ -46,12 +56,12 @@ const userSchema = new Schema(
   }
 );
 
-userSchema.virtual('cardCount').get(function() {
+userSchema.virtual("cardCount").get(function () {
   return this.cardCollection.length;
 });
 
-userSchema.pre('save', async function (next) {
-  if (this.isNew || this.isModified('password')) {
+userSchema.pre("save", async function (next) {
+  if (this.isNew || this.isModified("password")) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }

@@ -8,8 +8,8 @@ const typeDefs = gql`
     _id: ID!
     cardId: String!
     name: String
-    set: Set
-    images: Images
+    set: Set!
+    images: Images!
     price: Decimal128
     tcgPlayer: String
   }
@@ -32,13 +32,25 @@ const typeDefs = gql`
     balance: Decimal128
     avatar: String
     lastDailyCollected: Date
-    cardCollection: [Card]
+    cardCollection: [Card]!
     collectionWorth: Decimal128
+    favorites: [Card]
     cardCount: Int
   }
 
+  input SetInput {
+    id: String
+    name: String
+    series: String
+  }
+
+  input ImagesInput {
+    small: String
+    large: String
+  }
+
   input CardCollectionInput {
-    cardIds: [ID!]! # List of card IDs to add to the collection
+    cardIds: [ID!]!
   }
 
   type Query {
@@ -59,8 +71,13 @@ const typeDefs = gql`
       lastDailyCollected: Date
       collectionWorth: Decimal128
     ): User
-    updateBalance(userId: String!, balance: Float!): User
-    removeCardAndUpdateBalance(userId: String!, cardId: ID!, price: Float!): User
+    favorite(_id: ID!): Card
+    updateBalance(userId: String!, balance: Decimal128!): User
+    removeCardAndUpdateBalance(
+      userId: String!
+      cardId: ID!
+      price: Decimal128!
+    ): User
   }
 
   type Auth {

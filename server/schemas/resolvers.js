@@ -86,7 +86,7 @@ const resolvers = {
       const updatedUser = await User.findOneAndUpdate(
         { userId }, // Find the user by userId
         {
-          $pull: { cardCollection: cardId}, // Remove the card's ObjectId
+          $pull: { cardCollection: cardId }, // Remove the card's ObjectId
           $inc: {
             collectionWorth: -parseFloat(price), // Decrease collectionWorth
             balance: parseFloat(price), // Increase balance
@@ -110,6 +110,30 @@ const resolvers = {
       }
 
       return updatedUser;
+    },
+    favorite: async (parent, { _id }, context) => {
+      // Ensure the user is logged in
+      if (!context.user) {
+        throw new Error("You must be logged in to perform this action.");
+      }
+
+      // Add the card's _id to the user's favorites array
+      await User.findByIdAndUpdate(
+        { _id: context.user._id },
+        {
+          $addToSet: {
+            favorites: _id, // Add the card's _id to the favorites array
+          },
+        }
+      );
+
+      // Find and return the Card object associated with the _id
+      const card = await Card.findById(_id);
+      if (!card) {
+        throw new Error("Card not found.");
+      }
+
+      return card;
     },
   },
 };

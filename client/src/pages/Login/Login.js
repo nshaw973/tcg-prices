@@ -53,14 +53,14 @@ const Login = () => {
           <span className="loading loading-bars loading-lg"></span>
         </p>
       ) : (
-        <div className="card bg-base-100 w-fit shadow-xl flex mx-auto h-fit mt-8">
+        <div className="card bg-base-100 w-fit shadow-xl flex mx-auto h-fit mt-8 w-5/6 sm:w-96">
           <div className="card-body">
             <h1 className="text-c">Login</h1>
             <form
               className="flex flex-col justify-between"
               onSubmit={handleLogin}
             >
-              <label className="input input-bordered flex items-center gap-2 mb-2">
+              <label className="input input-sm input-bordered flex items-center gap-2 mb-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 16 16"
@@ -70,7 +70,7 @@ const Login = () => {
                   <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
                 </svg>
                 <input
-                  className="grow w-96"
+                  className="grow w-full"
                   id="userId"
                   type="text"
                   name="userId"
@@ -80,7 +80,7 @@ const Login = () => {
                   required
                 />
               </label>
-              <label className="input input-bordered flex items-center gap-2">
+              <label className="input input-xs input-bordered flex items-center gap-2 h-8">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 16 16"

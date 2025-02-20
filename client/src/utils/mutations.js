@@ -26,12 +26,28 @@ export const UPDATE_BALANCE = gql`
 
 // Remove card from collection mutation
 export const SELL_CARD = gql`
-  mutation removeCardAndUpdateBalance($userId: String!, $cardId: ID!, $price: Float!) {
-    removeCardAndUpdateBalance(userId: $userId, cardId: $cardId, price: $price) {
+  mutation removeCardAndUpdateBalance(
+    $userId: String!
+    $cardId: ID!
+    $price: Decimal128!
+  ) {
+    removeCardAndUpdateBalance(
+      userId: $userId
+      cardId: $cardId
+      price: $price
+    ) {
       userId
       username
       balance
       collectionWorth
+    }
+  }
+`;
+
+export const FAVORITE_CARD = gql`
+  mutation favorite($_id: ID!) {
+    favorite(_id: $_id) {
+      _id
     }
   }
 `;

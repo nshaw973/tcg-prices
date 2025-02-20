@@ -2,24 +2,38 @@ import React, { useState } from "react";
 import Auth from "../../../utils/auth";
 import { bgFabric, iconBurger } from "../../../images/index";
 import { useMutation } from "@apollo/client";
-import { SELL_CARD } from "../../../utils/mutations";
+import { FAVORITE_CARD, SELL_CARD } from "../../../utils/mutations";
 import { useParams } from "react-router-dom";
 
 const Card = ({ pkmn, index }) => {
-  const [sell, { error }] = useMutation(SELL_CARD);
+  const [sell] = useMutation(SELL_CARD);
+  const [favorite] = useMutation(FAVORITE_CARD);
+  const [cardFlip, playCardFlip] = useState(false);
   const { userId } = useParams();
   const me = Auth.getProfile().data;
-  const sellData = {
-    userId: me.userId,
-    cardId: pkmn._id,
-    price: parseFloat(pkmn.price.$numberDecimal),
-  };
   const handleSell = async () => {
     try {
       await sell({
-        variables: sellData,
+        variables: {
+          userId: me.userId,
+          cardId: pkmn._id,
+          price: parseFloat(pkmn.price.$numberDecimal),
+        },
       });
       window.location.reload();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleFavorite = async () => {
+    try {
+      await favorite({
+        variables: {
+          _id: pkmn._id,
+        },
+      });
+      console.log(`${pkmn.name} has been added to favorites!`);
     } catch (e) {
       console.error(e);
     }
@@ -28,13 +42,14 @@ const Card = ({ pkmn, index }) => {
   return (
     <li
       key={index}
-      className="m-2 shadow-xl flex flex-wrap animate-fade animate-once animate-ease-in rounded w-1/4 sm:w-1/5 md:w-1/6"
+      className="m-2 shadow-xl flex flex-wrap animate-fade animate-once animate-ease-in rounded w-1/4 sm:w-1/5 md:max-w-36 "
     >
       <div className="w-full flex flex-col">
         <img
           alt={pkmn.name || "Pokémon"}
           src={pkmn.images.small}
           onClick={() => document.getElementById(`card_${index}`).showModal()}
+          className={`${cardFlip && "animate-rotate-y animate-ease-linear"}`}
         />
         <dialog id={`card_${index}`} className="modal">
           <div
@@ -84,7 +99,21 @@ const Card = ({ pkmn, index }) => {
                 </a>
               </li>
               <li className="hover:bg-red-500 hover:text-white rounded-xl">
-                <a>Favorite</a>
+                <button
+                  onClick={async () => {
+                    try {
+                      await handleFavorite(); // Call the favorite function
+                      playCardFlip(true); // Play the card flip animation
+                    } catch (error) {
+                      console.error("Error favoriting card:", error);
+                      alert(
+                        "Failed to add card to favorites. Please try again."
+                      );
+                    }
+                  }}
+                >
+                  Favorite
+                </button>
               </li>
             </ul>
           </div>
