@@ -26,6 +26,9 @@ export const QUERY_USER = gql`
       lastDailyCollected
       cardCount
       collectionWorth
+      favorites {
+      _id
+      }
       cardCollection {
         _id
         cardId

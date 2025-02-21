@@ -10,7 +10,6 @@ const Collections = () => {
   const { loading, error, data } = useQuery(QUERY_USER, {
     variables: { userId },
   });
-
   // If there's no data, show loading or a fallback message
   if (!data) return <h1>Loading...</h1>;
   const {
@@ -20,7 +19,9 @@ const Collections = () => {
     avatar,
     cardCount,
     collectionWorth,
+    favorites
   } = data.user;
+
 
   return (
     <>
@@ -73,7 +74,7 @@ const Collections = () => {
           <ul className="flex flex-wrap justify-center w-full">
             {Array.isArray(cardCollection) &&
               cardCollection.map((pkmn, index) => (
-                <Card pkmn={pkmn} index={index}/>
+                <Card pkmn={pkmn} index={index} favorites={favorites}/>
               ))}
           </ul>
         </>

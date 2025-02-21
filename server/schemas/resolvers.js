@@ -10,7 +10,10 @@ const resolvers = {
       return User.find();
     },
     user: async (parent, { userId }) => {
-      const user = await User.findOne({ userId }).populate("cardCollection"); // Populating cardCollection directly from User
+      const user = await User.findOne({ userId }).populate([
+        "cardCollection",
+        "favorites",
+      ]);
       if (user) {
         // Ensure balance is a native JavaScript number, convert Decimal128
         if (user.balance) {

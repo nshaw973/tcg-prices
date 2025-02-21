@@ -5,7 +5,7 @@ import { useMutation } from "@apollo/client";
 import { FAVORITE_CARD, SELL_CARD } from "../../../utils/mutations";
 import { useParams } from "react-router-dom";
 
-const Card = ({ pkmn, index }) => {
+const Card = ({ pkmn, index, favorites }) => {
   const [sell] = useMutation(SELL_CARD);
   const [favorite] = useMutation(FAVORITE_CARD);
   const [cardFlip, playCardFlip] = useState(false);
@@ -79,6 +79,7 @@ const Card = ({ pkmn, index }) => {
 
           <div className="dropdown dropdown-top dropdown-end">
             <img
+              alt="icon"
               src={iconBurger}
               className="size-4 justify-end hover:invert"
               tabIndex={0}
@@ -90,13 +91,13 @@ const Card = ({ pkmn, index }) => {
             >
               {me.userId === userId && (
                 <li className="hover:bg-red-500 hover:text-white rounded-xl">
-                  <a onClick={handleSell}>Sell</a>
+                  <button onClick={handleSell}>Sell</button>
                 </li>
               )}
               <li className="hover:bg-red-500 hover:text-white rounded-xl">
-                <a href={pkmn.tcgPlayer} target="_blank" rel="noreferrer">
+                <button href={pkmn.tcgPlayer} target="_blank" rel="noreferrer">
                   TCGplayer
-                </a>
+                </button>
               </li>
               <li className="hover:bg-red-500 hover:text-white rounded-xl">
                 <button
