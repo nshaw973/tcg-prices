@@ -27,7 +27,20 @@ export const QUERY_USER = gql`
       cardCount
       collectionWorth
       favorites {
-      _id
+        _id
+        cardId
+        name
+        price
+        set {
+          id
+          name
+          series
+        }
+        images {
+          small
+          large
+        }
+        tcgPlayer
       }
       cardCollection {
         _id

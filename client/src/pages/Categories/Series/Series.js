@@ -45,7 +45,7 @@ const Series = () => {
         } catch (error) {
           if (error.name === "QuotaExceededError") {
             // If storage is full, remove the oldest item
-            removeOldestItem();
+            sessionStorage.clear()
             // Retry adding the item
             const url = `/api/search/series/${series}`;
             results = await getData(url);

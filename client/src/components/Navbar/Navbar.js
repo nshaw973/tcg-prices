@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import backgroundImage from "../../images/background/45-degree-fabric-dark.png";
-import { tabs, categories } from "./lists";
+import { categories } from "./lists";
 import Auth from "../../utils/auth";
 import LoggedIn from "./LoggedIn";
 

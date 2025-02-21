@@ -10,6 +10,7 @@ const Login = () => {
     userId: "",
     password: "",
   });
+  const [view, setView] = useState(false);
 
   const [login, { error, data, loading }] = useMutation(LOGIN_USER);
 
@@ -28,8 +29,6 @@ const Login = () => {
       const { data } = await login({
         variables: { ...loginForm },
       });
-      console.log(data);
-
       Auth.login(data.login.token);
 
       setLoginState({
@@ -53,14 +52,15 @@ const Login = () => {
           <span className="loading loading-bars loading-lg"></span>
         </p>
       ) : (
-        <div className="card bg-base-100 w-fit shadow-xl flex mx-auto h-fit mt-8 w-5/6 sm:w-96">
+        <div className="card bg-white text-black w-fit shadow-xl flex mx-auto h-fit mt-8 w-5/6 sm:w-96 ">
           <div className="card-body">
-            <h1 className="text-c">Login</h1>
+            <strong className="border-b-2 border-black mb-2">Login</strong>
             <form
               className="flex flex-col justify-between"
               onSubmit={handleLogin}
             >
-              <label className="input input-sm input-bordered flex items-center gap-2 mb-2">
+              {/* Discord ID */}
+              <label className="input input-sm bg-white border-1 border-black flex items-center gap-2 mb-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 16 16"
@@ -80,7 +80,8 @@ const Login = () => {
                   required
                 />
               </label>
-              <label className="input input-xs input-bordered flex items-center gap-2 h-8">
+              {/* Password */}
+              <label className="input input-sm bg-white border-1 border-black flex items-center gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 16 16"
@@ -96,13 +97,96 @@ const Login = () => {
                 <input
                   className="grow"
                   id="password"
-                  type="password"
+                  type={`${view ? "text" : "password"}`}
                   name="password"
                   placeholder="Enter your password"
                   value={loginForm.password}
                   onChange={handleChange}
                   required
                 />
+                {view ? (
+                  /* Show Password */
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 opacity-70"
+                    onClick={() => setView(false)}
+                  >
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g
+                      id="SVGRepo_tracerCarrier"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></g>
+                    <g id="SVGRepo_iconCarrier">
+                      {" "}
+                      <path
+                        d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12"
+                        stroke="#000000"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path>{" "}
+                      <path
+                        d="M1 12C1 12 5 20 12 20C19 20 23 12 23 12"
+                        stroke="#000000"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path>{" "}
+                      <circle
+                        cx="12"
+                        cy="12"
+                        r="3"
+                        stroke="#000000"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></circle>{" "}
+                    </g>
+                  </svg>
+                ) : (
+                  /* Hide Password */
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 opacity-70"
+                    onClick={() => setView(true)}
+                  >
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g
+                      id="SVGRepo_tracerCarrier"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></g>
+                    <g id="SVGRepo_iconCarrier">
+                      {" "}
+                      <path
+                        d="M2 2L22 22"
+                        stroke="#000000"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path>{" "}
+                      <path
+                        d="M6.71277 6.7226C3.66479 8.79527 2 12 2 12C2 12 5.63636 19 12 19C14.0503 19 15.8174 18.2734 17.2711 17.2884M11 5.05822C11.3254 5.02013 11.6588 5 12 5C18.3636 5 22 12 22 12C22 12 21.3082 13.3317 20 14.8335"
+                        stroke="#000000"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path>{" "}
+                      <path
+                        d="M14 14.2362C13.4692 14.7112 12.7684 15.0001 12 15.0001C10.3431 15.0001 9 13.657 9 12.0001C9 11.1764 9.33193 10.4303 9.86932 9.88818"
+                        stroke="#000000"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path>{" "}
+                    </g>
+                  </svg>
+                )}
               </label>
               <div className="flex justify-end mt-4">
                 <button
@@ -114,9 +198,9 @@ const Login = () => {
                 </button>
               </div>
               {error && (
-                <div className="my-3 p-3 bg-danger text-white rounded-xl">
+                <strong className="my-3 p-3 bg-danger bg-red-500 text-white rounded-xl animate-shake animate-twice animate-ease-linear">
                   {error.message}
-                </div>
+                </strong>
               )}
             </form>
           </div>

@@ -6,25 +6,28 @@ const mongoose = require("mongoose");
 const resolvers = {
   Query: {
     users: async () => {
-      // Populate cardCollection directly from User model
       return User.find();
     },
     user: async (parent, { userId }) => {
-      const user = await User.findOne({ userId }).populate([
-        "cardCollection",
-        "favorites",
-      ]);
-      if (user) {
-        // Ensure balance is a native JavaScript number, convert Decimal128
-        if (user.balance) {
-          user.balance =
-            user.balance instanceof mongoose.Types.Decimal128
-              ? parseFloat(user.balance.toString()) // Convert Decimal128 to Float
-              : user.balance;
+      try {
+        const user = await User.findOne({ userId }).populate([
+          "cardCollection",
+          "favorites",
+        ]);
+        if (user) {
+          // Ensure balance is a native JavaScript number, convert Decimal128
+          if (user.balance) {
+            user.balance =
+              user.balance instanceof mongoose.Types.Decimal128
+                ? parseFloat(user.balance.toString()) // Convert Decimal128 to Float
+                : user.balance;
+          }
+          user.cardCollection.reverse()
+          return user
         }
-        return user;
+      } catch (error) {
+        throw new Error("User not found");
       }
-      throw new Error("User not found");
     },
     card: async (parent, { cardId }) => {
       return Card.findOne({ cardId });

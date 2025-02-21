@@ -19,6 +19,7 @@ const LoggedIn = () => {
           className="h-12 ml-4 m-1 mr-4 rounded-xl"
           tabIndex={0}
           role="button"
+          alt={`${user.username}-avatar`}
         />
         <ul
           tabIndex={0}

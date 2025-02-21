@@ -1,21 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Auth from "../../../utils/auth";
 import { bgFabric, iconBurger } from "../../../images/index";
 import { useMutation } from "@apollo/client";
 import { FAVORITE_CARD, SELL_CARD } from "../../../utils/mutations";
 import { useParams } from "react-router-dom";
 
-const Card = ({ pkmn, index, favorites }) => {
+const Card = ({ pkmn, index }) => {
   const [sell] = useMutation(SELL_CARD);
   const [favorite] = useMutation(FAVORITE_CARD);
   const [cardFlip, playCardFlip] = useState(false);
   const { userId } = useParams();
-  const me = Auth.getProfile().data;
+  const [loginData, setLoginData] = useState(null);
+
   const handleSell = async () => {
     try {
       await sell({
         variables: {
-          userId: me.userId,
+          userId: loginData?.userId,
           cardId: pkmn._id,
           price: parseFloat(pkmn.price.$numberDecimal),
         },
@@ -38,6 +39,12 @@ const Card = ({ pkmn, index, favorites }) => {
       console.error(e);
     }
   };
+  useEffect(() => {
+    if (Auth.loggedIn()) {
+      const me = Auth.getProfile().data;
+      setLoginData(me);
+    }
+  }, [userId]);
 
   return (
     <li
@@ -87,33 +94,38 @@ const Card = ({ pkmn, index, favorites }) => {
             />
             <ul
               tabIndex={0}
-              className="dropdown-content menu bg-base-100 rounded-box z-[1] w-fit p-2 shadow text-sm"
+              className="dropdown-content menu bg-white rounded-box z-[1] w-fit p-2 shadow text-sm"
             >
-              {me.userId === userId && (
-                <li className="hover:bg-red-500 hover:text-white rounded-xl">
-                  <button onClick={handleSell}>Sell</button>
-                </li>
+              {loginData?.userId === userId && (
+                <>
+                  {/* Sell */}
+                  <li className="hover:bg-red-500 hover:text-white rounded-xl">
+                    <button onClick={handleSell}>Sell</button>
+                  </li>
+                  {/* Favorites */}
+                  <li className="hover:bg-red-500 hover:text-white rounded-xl">
+                    <button
+                      onClick={async () => {
+                        try {
+                          await handleFavorite(); // Call the favorite function
+                          playCardFlip(true); // Play the card flip animation
+                        } catch (error) {
+                          console.error("Error favoriting card:", error);
+                          alert(
+                            "Failed to add card to favorites. Please try again."
+                          );
+                        }
+                      }}
+                    >
+                      Favorite
+                    </button>
+                  </li>
+                </>
               )}
+              {/* TCGPlayer */}
               <li className="hover:bg-red-500 hover:text-white rounded-xl">
                 <button href={pkmn.tcgPlayer} target="_blank" rel="noreferrer">
                   TCGplayer
-                </button>
-              </li>
-              <li className="hover:bg-red-500 hover:text-white rounded-xl">
-                <button
-                  onClick={async () => {
-                    try {
-                      await handleFavorite(); // Call the favorite function
-                      playCardFlip(true); // Play the card flip animation
-                    } catch (error) {
-                      console.error("Error favoriting card:", error);
-                      alert(
-                        "Failed to add card to favorites. Please try again."
-                      );
-                    }
-                  }}
-                >
-                  Favorite
                 </button>
               </li>
             </ul>

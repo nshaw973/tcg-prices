@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { QUERY_USER } from "../../utils/queries";
 import { bgFabric } from "../../images/index";
-import Card from "./Card/Card"
+import Card from "./Card/Card";
 
 const Collections = () => {
   const { userId } = useParams();
   const { loading, error, data } = useQuery(QUERY_USER, {
     variables: { userId },
+  });
+  const [view, setView] = useState({
+    favorites: true,
+    fullCollection: false,
+    wishList: false,
   });
   // If there's no data, show loading or a fallback message
   if (!data) return <h1>Loading...</h1>;
@@ -19,9 +24,8 @@ const Collections = () => {
     avatar,
     cardCount,
     collectionWorth,
-    favorites
+    favorites,
   } = data.user;
-
 
   return (
     <>
@@ -71,12 +75,34 @@ const Collections = () => {
             </div>
           </div>
           {/* Card Collection */}
-          <ul className="flex flex-wrap justify-center w-full">
-            {Array.isArray(cardCollection) &&
-              cardCollection.map((pkmn, index) => (
-                <Card pkmn={pkmn} index={index} favorites={favorites}/>
-              ))}
-          </ul>
+          <div>
+            {/* View */}
+            <ul className="flex flex-row justify-between w-1/2 md:w-1/3 ml-auto mr-auto">
+              <li className="w-1/5 flex justify-center bg-red-500 hover:bg-red-700  text-white rounded-xl">
+                <a href="#favorites">Favorites</a>
+              </li>
+              <li className="w-1/5 flex justify-center bg-red-500 hover:bg-red-700 text-white rounded-xl">
+                <a href="#full-collection">Full Collection</a>
+              </li>
+              <li className="w-1/5 flex justify-center bg-red-500 hover:bg-red-700  text-white rounded-xl">
+                <a href="#wishlist">Wish List</a>
+              </li>
+            </ul>
+            {/* Favorites */}
+            <ul className="flex flex-wrap justify-center w-full">
+              {Array.isArray(favorites) &&
+                favorites.map((pkmn, index) => (
+                  <Card pkmn={pkmn} index={index} />
+                ))}
+            </ul>
+            {/* Full Collection */}
+            <ul className="flex flex-wrap justify-center w-full">
+              {Array.isArray(cardCollection) &&
+                cardCollection.map((pkmn, index) => (
+                  <Card pkmn={pkmn} index={index} />
+                ))}
+            </ul>
+          </div>
         </>
       )}
     </>
