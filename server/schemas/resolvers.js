@@ -22,8 +22,8 @@ const resolvers = {
                 ? parseFloat(user.balance.toString()) // Convert Decimal128 to Float
                 : user.balance;
           }
-          user.cardCollection.reverse()
-          return user
+          user.cardCollection.reverse();
+          return user;
         }
       } catch (error) {
         throw new Error("User not found");
@@ -118,28 +118,44 @@ const resolvers = {
       return updatedUser;
     },
     favorite: async (parent, { _id }, context) => {
-      // Ensure the user is logged in
-      if (!context.user) {
-        throw new Error("You must be logged in to perform this action.");
-      }
-
-      // Add the card's _id to the user's favorites array
-      await User.findByIdAndUpdate(
-        { _id: context.user._id },
-        {
-          $addToSet: {
-            favorites: _id, // Add the card's _id to the favorites array
-          },
+      try {
+        // Ensure the user is logged in
+        if (!context.user) {
+          throw new Error("You must be logged in to perform this action.");
         }
-      );
 
-      // Find and return the Card object associated with the _id
-      const card = await Card.findById(_id);
-      if (!card) {
-        throw new Error("Card not found.");
+        // Add the card's _id to the user's favorites array
+        await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          {
+            $addToSet: {
+              favorites: _id,
+            },
+          },
+          { new: true }
+        );
+      } catch (error) {
+        throw new Error("Unable to add card, please try again later!");
       }
-
-      return card;
+    },
+    unFavorite: async (parent, { _id }, context) => {
+      try {
+        if (!context.user) {
+          throw new Error("You must be logged in to perform this action.");
+        }
+        // Remove the card from the user's favorites
+        await User.findByIdAndUpdate(
+          context.user._id,
+          {
+            $pull: {
+              favorites: _id,
+            },
+          },
+          { new: true } // Return the updated document
+        );
+      } catch (error) {
+        throw new Error(`and error has occured`);
+      }
     },
   },
 };

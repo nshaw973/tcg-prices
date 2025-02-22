@@ -51,3 +51,11 @@ export const FAVORITE_CARD = gql`
     }
   }
 `;
+
+export const UNFAVORITE_CARD = gql`
+  mutation unFavorite($_id: ID!) {
+    unFavorite(_id: $_id) {
+      _id
+    }
+  }
+`

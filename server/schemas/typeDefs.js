@@ -72,6 +72,7 @@ const typeDefs = gql`
       collectionWorth: Decimal128
     ): User
     favorite(_id: ID!): Card
+    unFavorite(_id: ID!): Card
     updateBalance(userId: String!, balance: Decimal128!): User
     removeCardAndUpdateBalance(
       userId: String!

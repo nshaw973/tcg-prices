@@ -2,12 +2,17 @@ import React, { useEffect, useState } from "react";
 import Auth from "../../../utils/auth";
 import { bgFabric, iconBurger } from "../../../images/index";
 import { useMutation } from "@apollo/client";
-import { FAVORITE_CARD, SELL_CARD } from "../../../utils/mutations";
+import {
+  FAVORITE_CARD,
+  SELL_CARD,
+  UNFAVORITE_CARD,
+} from "../../../utils/mutations";
 import { useParams } from "react-router-dom";
 
-const Card = ({ pkmn, index }) => {
+const Card = ({ pkmn, index, isFavorite }) => {
   const [sell] = useMutation(SELL_CARD);
   const [favorite] = useMutation(FAVORITE_CARD);
+  const [unFavorite] = useMutation(UNFAVORITE_CARD);
   const [cardFlip, playCardFlip] = useState(false);
   const { userId } = useParams();
   const [loginData, setLoginData] = useState(null);
@@ -34,11 +39,28 @@ const Card = ({ pkmn, index }) => {
           _id: pkmn._id,
         },
       });
+      playCardFlip(true);
       console.log(`${pkmn.name} has been added to favorites!`);
     } catch (e) {
       console.error(e);
     }
   };
+
+  const handleUnfavorite = async () => {
+    try {
+      await unFavorite({
+        variables: {
+          _id: pkmn._id,
+        },
+      });
+      playCardFlip(true);
+      console.log(`${pkmn.name} has been removed from favorites!`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // gives more options in the dropdown menu if the user is viewing their own collection
   useEffect(() => {
     if (Auth.loggedIn()) {
       const me = Auth.getProfile().data;
@@ -104,21 +126,15 @@ const Card = ({ pkmn, index }) => {
                   </li>
                   {/* Favorites */}
                   <li className="hover:bg-red-500 hover:text-white rounded-xl">
-                    <button
-                      onClick={async () => {
-                        try {
-                          await handleFavorite(); // Call the favorite function
-                          playCardFlip(true); // Play the card flip animation
-                        } catch (error) {
-                          console.error("Error favoriting card:", error);
-                          alert(
-                            "Failed to add card to favorites. Please try again."
-                          );
-                        }
-                      }}
-                    >
-                      Favorite
-                    </button>
+                    {isFavorite ? (
+                      <button onClick={async () => handleUnfavorite()}>
+                        Unfavorite
+                      </button>
+                    ) : (
+                      <button onClick={async () => handleFavorite()}>
+                        Favorite
+                      </button>
+                    )}
                   </li>
                 </>
               )}
