@@ -52,12 +52,12 @@ const SearchAll = ({ props }) => {
                 <h1 className="text-xs">{item.set.name}</h1>
               </div>
               {/* Add */}
-              {/* <button
-                className="btn btn-sm rounded-none text-white ml-2 hover:invert"
+              <button
+                className="btn btn-sm rounded-none text-white ml-2 hover:invert rounded-lg"
                 onClick={() => setCardFlip(true)}
               >
                 +
-              </button> */}
+              </button>
             </div>
             {/* Data */}
             <div className="text-black pl-1 p-1 w-full h-full">
@@ -71,14 +71,7 @@ const SearchAll = ({ props }) => {
                     )}
                   </ul>
                   {/* Link */}
-                  <a
-                    className="flex mt-auto justify-end w-full underline"
-                    href={item.tcgplayer.url}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    View on TCGPlayer
-                  </a>
+
                 </div>
               ) : (
                 <div className="pl-0.1 h-full w-full flex flex-col ">
@@ -86,20 +79,20 @@ const SearchAll = ({ props }) => {
                     Card Data not found, please visit TCGPlayer for more
                     information!
                   </h1>
-                  <a
-                    className="flex mt-auto justify-end w-full underline"
-                    href={item.cardmarket.url}
+                </div>
+              )}
+            </div>
+            <div className="flex flex-row-reverse mt-auto w-full justify-between">
+            <a
+                    className="flex mt-auto justify-end underline text-black"
+                    href={item.tcgplayer.url}
                     target="_blank"
                     rel="noreferrer"
                   >
                     View on TCGPlayer
                   </a>
-                </div>
-              )}
-            </div>
-            <div className="flex flex-row-reverse mt-auto w-full">
               {cardFlip && (
-                <h1 className="bg-green-600 text-white mr-auto text-bold rounded h-6 pl-2 pr-2 m-auto">
+                <h1 className="bg-green-600 text-white rounded m-auto w-fit w-auto pl-4 pr-4">
                   Card Added!
                 </h1>
               )}

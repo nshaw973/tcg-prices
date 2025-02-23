@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { QUERY_USER } from "../../utils/queries";
 import { bgFabric } from "../../images/index";
 import Card from "./Card/Card";
+import Auth from "../../utils/auth";
 
 const Collections = () => {
   const { userId } = useParams();
   const { loading, error, data } = useQuery(QUERY_USER, {
     variables: { userId },
   });
-  const [view, setView] = useState("favorites");
+  const [view, setView] = useState("full-collection");
   // If there's no data, show loading or a fallback message
   if (!data) return <h1>Loading...</h1>;
   const {
@@ -73,13 +74,23 @@ const Collections = () => {
           {/* Card Collection */}
           <div>
             {/* View */}
-            <ul className="flex flex-row justify-between w-1/2 md:w-1/3 ml-auto mr-auto">
-              <li className="w-1/5 flex justify-center bg-red-500 hover:bg-red-700  text-white rounded-xl">
+            <ul className="flex flex-row justify-between w-1/2 lg:w-1/3 ml-auto mr-auto">
+              <li
+                className="w-1/3 flex justify-center bg-red-700 hover:bg-red-800 text-white rounded-s-xl border-2 border-black"
+                style={{
+                  backgroundImage: `url(${bgFabric})`,
+                }}
+              >
                 <button onClick={() => setView("favorites")} className="w-full">
                   Favorites
                 </button>
               </li>
-              <li className="w-1/5 flex justify-center bg-red-500 hover:bg-red-700 text-white rounded-xl">
+              <li
+                className="w-1/3 flex justify-center bg-red-700 hover:bg-red-800 text-white border-2 border-black"
+                style={{
+                  backgroundImage: `url(${bgFabric})`,
+                }}
+              >
                 <button
                   onClick={() => setView("full-collection")}
                   className="w-full"
@@ -87,7 +98,12 @@ const Collections = () => {
                   Full Collection
                 </button>
               </li>
-              <li className="w-1/5 flex justify-center bg-red-500 hover:bg-red-700 text-white rounded-xl">
+              <li
+                className="w-1/3 flex justify-center bg-red-700 hover:bg-red-800 text-white rounded-e-xl border-2 border-black"
+                style={{
+                  backgroundImage: `url(${bgFabric})`,
+                }}
+              >
                 <button onClick={() => setView("wish-list")} className="w-full">
                   Wish List
                 </button>
