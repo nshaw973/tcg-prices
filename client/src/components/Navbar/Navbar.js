@@ -44,7 +44,7 @@ const Navbar = () => {
                 <li className="w-full">
                   <Link to={"/login"}>
                     <h1
-                      className={` text-lg h-full w-full m-3 rounded-xl`}
+                      className='text-lg h-full w-full m-3 rounded-xl'
                     >
                       Login
                     </h1>
@@ -57,7 +57,7 @@ const Navbar = () => {
       </div>
       {/* 2nd Line */}
       <div
-        className="flex flex-row justify-between p-2 text-white"
+        className="flex flex-row justify-between p-2"
         style={{
           backgroundColor: "#b51f1f",
           backgroundImage: `url(${backgroundImage})`,
@@ -66,13 +66,13 @@ const Navbar = () => {
         <br />
         {/* Search Form */}
         <div className="ml-auto mr-auto ">
-          <form onSubmit={handleSubmit} className="flex content-center">
+          <form onSubmit={handleSubmit} className="flex content-center ">
             {/* Search type selection */}
             <div className="join">
               <div>
                 <div>
                   <input
-                    className="input input-bordered join-item input-sm"
+                    className="input join-item input-sm bg-white border-1 border-black text-black" 
                     type="text"
                     name="query"
                     id="query"
@@ -81,7 +81,7 @@ const Navbar = () => {
                 </div>
               </div>
               <select
-                className="select select-bordered join-item select-sm"
+                className="select join-item select-sm bg-white border-l-1 border-black text-black"
                 tabIndex={0}
                 onChange={(e) => setQueryType(e.target.value)} // Update queryType on selection change
                 value={queryType}
@@ -93,7 +93,7 @@ const Navbar = () => {
                 <option value="id">Id</option>
               </select>
               <div className="indicator">
-                <button className="btn btn-sm join-item" type="submit">
+                <button className="btn btn-sm join-item bg-white text-black" type="submit">
                   Search
                 </button>
               </div>
@@ -104,17 +104,17 @@ const Navbar = () => {
       </div>
       {/* Tabs */}
       <div
-        className="bg-neutral-800 w-full flex flex-row"
+        className="bg-neutral-800 w-full flex flex-row justify-center"
         style={{
           backgroundImage: `url(${backgroundImage})`,
         }}
       >
-        <div className="ml-auto mr-auto flex flex-row">
+        <div className="flex flex-row w-1/6">
           {categories.map((category, index) => (
             <Link
               to={`/categories/${category.name}`}
               key={index}
-              className="p-2 w-18 underline text-white"
+              className="m-auto btn btn-sm w-1/2 rounded-none bg-white text-black hover:text-white"
             >
               {category.alt}
             </Link>

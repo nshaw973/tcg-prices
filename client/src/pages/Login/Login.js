@@ -55,7 +55,7 @@ const Login = () => {
         </>
       ) : (
         <div className="card bg-white text-black w-fit shadow-xl flex mx-auto h-fit mt-8 w-5/6 sm:w-96 ">
-          <div className="card-body">
+          <div className="card-body text-black">
             <strong className="border-b-2 border-black mb-2">Login</strong>
             <form
               className="flex flex-col justify-between"
@@ -65,7 +65,7 @@ const Login = () => {
               <label className="input input-sm bg-white border-1 border-black flex items-center gap-2 mb-2">
               <img src={iconUser} className="h-4 w-4 opacity-70" alt=""/>
                 <input
-                  className="grow w-full"
+                  className="grow w-full bg-white"
                   id="userId"
                   type="text"
                   name="userId"
@@ -79,7 +79,7 @@ const Login = () => {
               <label className="input input-sm bg-white border-1 border-black flex items-center gap-2">
                 <img src={iconKey} className="h-4 w-4 opacity-70" alt=""/>
                 <input
-                  className="grow"
+                  className="grow bg-white"
                   id="password"
                   type={`${view ? "text" : "password"}`}
                   name="password"
@@ -121,6 +121,9 @@ const Login = () => {
                 </strong>
               )}
             </form>
+            <div>
+              <p> In Discord, run "/view-credentials" for your ID and password</p>
+            </div>
           </div>
         </div>
       )}
