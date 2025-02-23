@@ -65,7 +65,7 @@ const Login = () => {
               <label className="input input-sm bg-white border-1 border-black flex items-center gap-2 mb-2">
               <img src={iconUser} className="h-4 w-4 opacity-70" alt=""/>
                 <input
-                  className="grow w-full bg-white"
+                  className="grow w-full bg-transparent"
                   id="userId"
                   type="text"
                   name="userId"
@@ -79,7 +79,7 @@ const Login = () => {
               <label className="input input-sm bg-white border-1 border-black flex items-center gap-2">
                 <img src={iconKey} className="h-4 w-4 opacity-70" alt=""/>
                 <input
-                  className="grow bg-white"
+                  className="grow bg-transparent"
                   id="password"
                   type={`${view ? "text" : "password"}`}
                   name="password"
