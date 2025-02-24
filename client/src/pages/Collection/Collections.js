@@ -4,11 +4,10 @@ import { useParams } from "react-router-dom";
 import { QUERY_USER } from "../../utils/queries";
 import { bgFabric } from "../../images/index";
 import Card from "./Card/Card";
-import Auth from "../../utils/auth";
 
 const Collections = () => {
   const { userId } = useParams();
-  const { loading, error, data } = useQuery(QUERY_USER, {
+  const { loading, error, data, refetch } = useQuery(QUERY_USER, {
     variables: { userId },
   });
   const [view, setView] = useState("full-collection");
@@ -117,7 +116,7 @@ const Collections = () => {
                   <ul className="flex flex-wrap justify-center w-full">
                     {Array.isArray(favorites) &&
                       favorites.map((pkmn, index) => (
-                        <Card pkmn={pkmn} index={index} isFavorite={true} />
+                        <Card pkmn={pkmn} index={index} isFavorite={true} refetch={refetch} />
                       ))}
                   </ul>
                 </>
@@ -129,7 +128,7 @@ const Collections = () => {
                   <ul className="flex flex-wrap justify-center w-full">
                     {Array.isArray(cardCollection) &&
                       cardCollection.map((pkmn, index) => (
-                        <Card pkmn={pkmn} index={index} />
+                        <Card pkmn={pkmn} index={index} refetch={refetch} />
                       ))}
                   </ul>
                 </>

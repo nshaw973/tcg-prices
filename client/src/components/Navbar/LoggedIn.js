@@ -30,7 +30,7 @@ const LoggedIn = () => {
             <Link to={`/collection/${user.userId}`}>View Collection</Link>
           </li>
           <li className="hover:bg-red-500 hover:text-white rounded-xl">
-            <Link to={`/user/${user.useeId}/settings`}>Settings</Link>
+            <Link to={`/user/${user.userId}/settings`}>Settings</Link>
           </li>
           <li className="hover:bg-red-500 hover:text-white rounded-xl">
             <h1 onClick={logout}>Logout</h1>

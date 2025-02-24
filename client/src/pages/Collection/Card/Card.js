@@ -9,11 +9,14 @@ import {
 } from "../../../utils/mutations";
 import { useParams } from "react-router-dom";
 
-const Card = ({ pkmn, index, isFavorite }) => {
+const Card = ({ pkmn, index, isFavorite, refetch }) => {
   const [sell] = useMutation(SELL_CARD);
   const [favorite] = useMutation(FAVORITE_CARD);
   const [unFavorite] = useMutation(UNFAVORITE_CARD);
-  const [cardFlip, playCardFlip] = useState(false);
+  const [cardAnimation, playCardAnimation] = useState({
+    flip: false,
+    fade: false,
+  });
   const { userId } = useParams();
   const [loginData, setLoginData] = useState(null);
 
@@ -26,7 +29,7 @@ const Card = ({ pkmn, index, isFavorite }) => {
           price: parseFloat(pkmn.price.$numberDecimal),
         },
       });
-      window.location.reload();
+      refetch()
     } catch (e) {
       console.error(e);
     }
@@ -39,7 +42,8 @@ const Card = ({ pkmn, index, isFavorite }) => {
           _id: pkmn._id,
         },
       });
-      playCardFlip(true);
+      playCardAnimation({ flip: true });
+      refetch()
       console.log(`${pkmn.name} has been added to favorites!`);
     } catch (e) {
       console.error(e);
@@ -53,10 +57,9 @@ const Card = ({ pkmn, index, isFavorite }) => {
           _id: pkmn._id,
         },
       });
-      playCardFlip(true);
-      console.log(`${pkmn.name} has been removed from favorites!`);
-    } catch (error) {
-      console.log(error);
+      refetch()
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -78,7 +81,7 @@ const Card = ({ pkmn, index, isFavorite }) => {
           alt={pkmn.name || "Pokémon"}
           src={pkmn.images.small}
           onClick={() => document.getElementById(`card_${index}`).showModal()}
-          className={`${cardFlip && "animate-rotate-y animate-ease-linear"}`}
+          className={`${cardAnimation.flip && "animate-rotate-y"} ${cardAnimation.fade && 'animate-fade animate-reverse animate-duration-200'} animate-ease-linear`}
         />
         <dialog id={`card_${index}`} className="modal">
           <div
