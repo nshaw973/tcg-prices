@@ -109,12 +109,12 @@ const Navbar = () => {
           backgroundImage: `url(${backgroundImage})`,
         }}
       >
-        <div className="flex flex-row w-1/6">
+        <div className="flex flex-row w-full justify-center">
           {categories.map((category, index) => (
             <Link
               to={`/categories/${category.name}`}
               key={index}
-              className="m-auto btn btn-sm w-1/2 rounded-none bg-white text-black hover:text-white"
+              className="btn btn-sm w-24 rounded-none bg-white text-black hover:text-white"
             >
               {category.alt}
             </Link>
