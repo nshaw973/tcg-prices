@@ -93,7 +93,7 @@ const Navbar = () => {
                 <option value="id">Id</option>
               </select>
               <div className="indicator">
-                <button className="btn btn-sm join-item bg-white text-black" type="submit">
+                <button className="btn btn-sm join-item bg-white text-black border-black border-1" type="submit">
                   Search
                 </button>
               </div>
