@@ -6,7 +6,10 @@ import Sets from "./utils/Sets";
 
 const Homepage = () => {
   return (
-    <div className="h-full bg-white">
+    <div className="h-full"
+    style={{
+      backgroundImage: `url(${backgroundImage})`,
+    }}>
       {/* Banner */}
       <section
         className="w-full h-36 bg-white shadow-xl"
@@ -19,9 +22,7 @@ const Homepage = () => {
       {/* Install Bot Link */}
       <section
         className="flex flex-col bg-neutral-700 p-6"
-        style={{
-          backgroundImage: `url(${backgroundImage})`,
-        }}
+
       >
         <div className="ml-auto mr-auto text-white">
           <h1>Install To Your Server!</h1>
@@ -37,12 +38,19 @@ const Homepage = () => {
       </section>
       <section className="w-full">
         <div>
-          <h1>Available Sets:</h1>
-          <Sets />
+          <h1 className="text-center text-white">Available Sets:</h1>
+          <div className="bg-white">
+          <Sets/>
+          </div>
+
         </div>
         {/* Random Collection */}
-        <div className="flex justify-center">
+        <div className="flex flex-col justify-center">
+          <h1 className="text-center text-white w-full">Check this collection out!</h1>
+          <div className="bg-white">
           <RandomCollection />
+          </div>
+
         </div>
       </section>
     </div>

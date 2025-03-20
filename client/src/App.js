@@ -57,7 +57,7 @@ function App() {
             }}
           >
             <div
-              className="w-fit xl:w-10/12 bg-neutral-800"
+              className="w-fit xl:w-8/12 bg-neutral-800"
               style={{
                 backgroundImage: `url(${bgImage2})`,
               }}

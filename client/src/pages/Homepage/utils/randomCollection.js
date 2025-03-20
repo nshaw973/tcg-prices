@@ -18,7 +18,7 @@ const RandomCollection = () => {
           <Loading />
         </>
       ) : (
-        <section className="flex flex-wrap justify-center border-2 p-2 m-2 rounded-xl">
+        <section className="flex flex-wrap justify-center border-2 p-2 ml-auto mr-auto rounded-xl w-fit">
           {/* Image */}
           <container className="flex flex-col justify-center">
             <img
