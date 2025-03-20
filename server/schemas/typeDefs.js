@@ -58,6 +58,7 @@ const typeDefs = gql`
     user(userId: String!): User
     card(cardId: String!): Card
     me: User
+    randomUser: User
   }
 
   type Mutation {

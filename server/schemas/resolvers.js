@@ -39,6 +39,36 @@ const resolvers = {
       }
       throw new AuthenticationError("Not logged in");
     },
+    randomUser: async () => {
+      try {
+        // Step 1: Fetch a random user
+        const user = await User.aggregate([
+          { $sample: { size: 1 } }, // Randomly select 1 user
+        ]);
+    
+        if (user.length > 0) {
+          const randomUser = user[0];
+    
+          // Step 2: Populate cardCollection with only the newest 3 cards
+          const populatedUser = await User.findById(randomUser._id)
+            .populate({
+              path: 'cardCollection',
+              options: {
+                sort: { createdAt: -1 }, // Sort by createdAt in descending order (newest first)
+                limit: 3, // Limit to 3 cards
+              },
+            })
+            .exec();
+          return populatedUser;
+        } else {
+          console.log('No users found in the collection.');
+          return null;
+        }
+      } catch (error) {
+        console.error('Error fetching random user:', error);
+        throw error;
+      }
+    }
   },
 
   Mutation: {

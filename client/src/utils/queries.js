@@ -75,3 +75,33 @@ export const QUERY_USERS = gql`
     }
   }
 `;
+
+export const QUERY_RANDOM = gql`
+  query randomUser {
+    randomUser {
+      _id
+      userId
+      username
+      avatar
+      balance
+      cardCount
+      collectionWorth
+      cardCollection {
+        _id
+        cardId
+        name
+        price
+        set {
+          id
+          name
+          series
+        }
+        images {
+          small
+          large
+        }
+        tcgPlayer
+      }
+    }
+  }
+`;
