@@ -76,7 +76,7 @@ const Search = () => {
           <h1 className="w-full text-black">Search Results: </h1>
           <div className="w-full">
             {data ? (
-              <ul className="flex flex-wrap justify-center">
+              <ul className="flex flex-wrap w-full justify-center">
                 {renderResults(data)} {/* Only render after data is fetched */}
               </ul>
             ) : (

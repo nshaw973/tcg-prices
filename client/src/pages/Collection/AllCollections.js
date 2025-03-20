@@ -14,7 +14,7 @@ const AllCollections = () => {
         <h1>Error: {error.message}</h1>
       ) : (
         <div>
-          <h1>Here are all the users! Click to view their collections</h1>
+          <h1 className="text-white p-2">Here are all the users! Click to view their collections</h1>
           <ul className="animate-fade flex flex-wrap w-full">
             {data?.users.map((user, index) => {
               return (

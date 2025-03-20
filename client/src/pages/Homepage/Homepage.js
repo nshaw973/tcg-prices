@@ -2,6 +2,7 @@ import React from "react";
 import tcgBg from "./images/bgTcgHome.png";
 import backgroundImage from "../../images/background/black-linen.png";
 import RandomCollection from "./utils/randomCollection";
+import Sets from "./utils/Sets";
 
 const Homepage = () => {
   return (
@@ -34,7 +35,11 @@ const Homepage = () => {
           </a>
         </div>
       </section>
-      <section className="flex flex-wrap">
+      <section className="w-full">
+        <div>
+          <h1>Available Sets:</h1>
+          <Sets />
+        </div>
         {/* Random Collection */}
         <div className="flex justify-center">
           <RandomCollection />
