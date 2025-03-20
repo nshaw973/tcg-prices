@@ -5,7 +5,7 @@ import { QUERY_RANDOM } from "../../../utils/queries";
 import { Link } from "react-router-dom";
 
 const RandomCollection = () => {
-  const { loading, data } = useQuery(QUERY_RANDOM);
+  const { loading, data, refetch } = useQuery(QUERY_RANDOM);
   const [user, setUser] = useState("");
   useEffect(() => {
     loading === false ? setUser(data.randomUser) : setUser("");
