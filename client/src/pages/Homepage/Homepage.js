@@ -1,11 +1,13 @@
-import React from "react";
-import tcgBg from "./images/bgTcgHome.png";
+import React, {useEffect, useState} from "react";
 import linenBG from "./images/45-degree-fabric-dark.png";
 import backgroundImage from "../../images/background/black-linen.png";
 import RandomCollection from "./utils/randomCollection";
+import { covers } from "./images";
 import Sets from "./utils/Sets";
 
 const Homepage = () => {
+  const [cover,setCover] = useState(covers[2])
+
   return (
     <div
       className="h-full"
@@ -15,9 +17,9 @@ const Homepage = () => {
     >
       {/* Banner */}
       <section
-        className="w-full h-36 bg-white shadow-xl"
+        className={`w-full h-48 bg-white shadow-xl`}
         style={{
-          backgroundImage: `url(${tcgBg})`,
+          backgroundImage: `url(${cover})`,
           backgroundPosition: "center",
           backgroundSize: "cover",
         }}
