@@ -12,7 +12,7 @@ const Sets = () => {
   return (
     <div className="flex flex-wrap justify-center">
       {sets.map((set) => (
-        <div key={set.id}>
+        <div key={set.id} className="h-18 mt-auto mb-auto">
           <img
             src={`https://images.pokemontcg.io/${set.id}/logo.png`}
             alt={set.name}
