@@ -7,7 +7,7 @@ import {
   SELL_CARD,
   UNFAVORITE_CARD,
 } from "../../../utils/mutations";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const Card = ({ pkmn, index, isFavorite, refetch }) => {
   const [sell] = useMutation(SELL_CARD);
@@ -29,7 +29,7 @@ const Card = ({ pkmn, index, isFavorite, refetch }) => {
           price: parseFloat(pkmn.price.$numberDecimal),
         },
       });
-      refetch()
+      refetch();
     } catch (e) {
       console.error(e);
     }
@@ -43,7 +43,7 @@ const Card = ({ pkmn, index, isFavorite, refetch }) => {
         },
       });
       playCardAnimation({ flip: true });
-      refetch()
+      refetch();
       console.log(`${pkmn.name} has been added to favorites!`);
     } catch (e) {
       console.error(e);
@@ -57,7 +57,7 @@ const Card = ({ pkmn, index, isFavorite, refetch }) => {
           _id: pkmn._id,
         },
       });
-      refetch()
+      refetch();
     } catch (e) {
       console.log(e);
     }
@@ -81,7 +81,10 @@ const Card = ({ pkmn, index, isFavorite, refetch }) => {
           alt={pkmn.name || "Pokémon"}
           src={pkmn.images.small}
           onClick={() => document.getElementById(`card_${index}`).showModal()}
-          className={`${cardAnimation.flip && "animate-rotate-y"} ${cardAnimation.fade && 'animate-fade animate-reverse animate-duration-200'} animate-ease-linear`}
+          className={`${cardAnimation.flip && "animate-rotate-y"} ${
+            cardAnimation.fade &&
+            "animate-fade animate-reverse animate-duration-200"
+          } animate-ease-linear`}
         />
         <dialog id={`card_${index}`} className="modal">
           <div
@@ -143,8 +146,10 @@ const Card = ({ pkmn, index, isFavorite, refetch }) => {
               )}
               {/* TCGPlayer */}
               <li className="hover:bg-red-500 hover:text-white rounded-xl">
-                <button href={pkmn.tcgPlayer} target="_blank" rel="noreferrer">
-                  TCGplayer
+                <button>
+                  <Link to={pkmn.tcgPlayer} target="_blank" rel="noreferrer">
+                    TCGPlayer
+                  </Link>
                 </button>
               </li>
             </ul>
