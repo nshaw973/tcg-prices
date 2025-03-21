@@ -20,7 +20,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="w-full flex flex-col">
+    <div className="w-full flex flex-col z-[1]">
       {/* 1st Line */}
       <div className="bg-white text-black flex flex-row justify-between h-14">
         <Link to="/">

@@ -51,13 +51,13 @@ function App() {
         <Router>
           <Navbar />
           <div
-            className="w-full flex flex-grow bg-neutral-600 justify-center shadow-2xl shadow-inner text-xs sm:text-sm"
+            className="w-full flex flex-grow bg-neutral-600 justify-center shadow-custom text-xs sm:text-sm"
             style={{
               backgroundImage: `url(${bgImage})`,
             }}
           >
             <div
-              className="w-fit xl:w-8/12 bg-neutral-800"
+              className="w-fit xl:w-8/12 bg-neutral-800 shadow-blade"
               style={{
                 backgroundImage: `url(${bgImage2})`,
               }}

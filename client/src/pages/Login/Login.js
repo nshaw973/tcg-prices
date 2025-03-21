@@ -56,7 +56,7 @@ const Login = () => {
       ) : (
         <div className="card bg-white text-black w-fit shadow-xl flex mx-auto h-fit mt-8 w-5/6 sm:w-96 ">
           <div className="card-body text-black">
-            <strong className="border-b-2 border-black mb-2">Login</strong>
+            <strong className="border-b-2 border-black pb-2 mb-2 text-lg">Login</strong>
             <form
               className="flex flex-col justify-between"
               onSubmit={handleLogin}

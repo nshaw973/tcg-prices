@@ -19,3 +19,43 @@ code {
 .btn {
   text-transform: none !important;
 }
+
+
+.shadow-custom {
+  box-shadow: inset 0px 0px 20px 2px black;
+}
+
+.shadow-blade {
+  box-shadow: 0px 0px 20px 2px black;
+}
+
+.cover-images {
+  background-image: url(./pages/Homepage/images/cover/brilliant.png);
+  background-position: center;
+  background-size: cover;
+  animation: changeBackground 70s infinite;
+}
+
+@keyframes changeBackground {
+  0% {
+    background-image: url(./pages/Homepage/images/cover/brilliant.png);
+  }
+  15% {
+    background-image: url(./pages/Homepage/images/cover/151.png);
+  }
+  30% {
+    background-image: url(./pages/Homepage/images/cover/evolved.jpg);
+  }
+  45% {
+    background-image: url(./pages/Homepage/images/cover/fates.jpg);
+  }
+  60% {
+    background-image: url(./pages/Homepage/images/cover/obsidian.jpg);
+  }
+  75% {
+    background-image: url(./pages/Homepage/images/cover/prismatic.jpg);
+  }
+  90% {
+    background-image: url(./pages/Homepage/images/cover/twilight.jpg);
+  }
+}

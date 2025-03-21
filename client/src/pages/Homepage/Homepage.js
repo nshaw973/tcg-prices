@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import linenBG from "./images/45-degree-fabric-dark.png";
 import backgroundImage from "../../images/background/black-linen.png";
 import RandomCollection from "./utils/randomCollection";
@@ -6,8 +6,6 @@ import { covers } from "./images";
 import Sets from "./utils/Sets";
 
 const Homepage = () => {
-  const [cover,setCover] = useState(covers[2])
-
   return (
     <div
       className="h-full"
@@ -17,12 +15,7 @@ const Homepage = () => {
     >
       {/* Banner */}
       <section
-        className={`w-full h-48 bg-white shadow-xl`}
-        style={{
-          backgroundImage: `url(${cover})`,
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-        }}
+        className={`w-full h-48 bg-white shadow-xl cover-images`}
       ></section>
       {/* Install Bot Link */}
       <section className="flex flex-col w-full justify-center">
@@ -49,7 +42,7 @@ const Homepage = () => {
       <section className="w-full">
         <div>
           <h1 className="text-center text-white">Available Sets:</h1>
-          <div className="bg-white">
+          <div className="bg-white p-4">
             <Sets />
           </div>
         </div>
@@ -58,7 +51,7 @@ const Homepage = () => {
           <h1 className="text-center text-white w-full">
             Check this collection out!
           </h1>
-          <div className="bg-white">
+          <div className="bg-white p-4">
             <RandomCollection />
           </div>
         </div>
